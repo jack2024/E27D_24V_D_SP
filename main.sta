@@ -1,0 +1,80 @@
+
+ROM used: 5892 (52%)
+          5892 (52%) including unused fragments
+
+          2 Average locations per line
+          10 Average locations per statement
+
+RAM used: 243 (6%) at main() level
+          272 (7%) worst case
+
+Stack used: 7 worst case (out of 31 total available)
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+ 1727   615 100  main.c
+   90     0   0  main.h
+  484     0   0  C:\Program Files (x86)\PICC\devices\24FJ16GA004.h
+   37     0   0  C:\Program Files (x86)\PICC\drivers\stdio.h
+  409     0   0  C:\Program Files (x86)\PICC\drivers\string.h
+   28     0   0  C:\Program Files (x86)\PICC\drivers\stddef.h
+   28     0   0  C:\Program Files (x86)\PICC\drivers\ctype.h
+----- -----
+ 2803   615 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0     16   0   2             @delay_ms1
+0     22   0   0             @const188
+0     16   0   0             @const190
+0     14   0   0    48  1.1  SoftI2CInit
+0     30   0   0   134  1.3  i2cNack
+0     30   0   0   134  1.3  i2cAck
+0     26   0   0   106  1.3  SoftI2CStart
+0     26   0   0   106  1.3  SoftI2CStop
+0     98   1   2   654  6.2  SoftI2CWriteByte
+0     74   1   4   448  6.2  i2cReadByte
+0     42   0   0   167  2.6  Soft_adc_init
+0     62   1   3   447  4.3  Soft_read_adc_mcp
+0     88   1   1             @I2C_READ_1
+0     94   1   1             @I2C_WRITE_1
+0     78   1   1    84  2.4  ext_eeprom_ready
+0     88   1   2   145  3.0  write_ext_eeprom
+0    134   1   2   219  3.5  read_ext_eeprom
+0    616   5   4  4525 12.6  SegmentDisplay
+0      6   0   0    22  1.2  StartTimer
+0      4   0   0    22  1.2  StopTimer
+0    680   6   9  4357 12.4  Read_VDC
+0    100   1   0             @SI64TOF64
+0    270   2   0             @MULFF64
+0    264   2   8             @DIVFF64
+0     68   1   0             @F64TO48
+0    416   4   8             @ADDFF
+0    202   2   8             @DIVFF
+0     44   0   4             @SFTOI
+0    190   2   8             @MULFF
+0    552   5   8  4228 10.9  buttonRead
+0    228   2   0  1408  5.9  TIMER3_isr
+0     76   1   0   315  3.7  TIMER2_isr
+0    726   6   9  3677 11.4  MAIN
+
+Program metrics:
+    Functions               20
+    Statements              615
+    Comments                942
+    Volume (V)              30915
+    Difficilty (D)          95.4
+    Effort to implement (E) 2950368
+    Time to implement (T)   45 hours, 32 minutes
+    Est Delivered Bugs (B)  7
+    Cyclomatic Complexity   126
+    Maintainability (MI)    29
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00002     4  0  
+00004-001FE   508  0  
+00200-02BFA  5380  5368  
+
+
+

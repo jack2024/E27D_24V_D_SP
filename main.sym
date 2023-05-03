@@ -1,0 +1,179 @@
+W0      @SCRATCH
+W0L     _RETURN_
+W0 -W3  @MULFF64.P1
+W0 -W1  @READ_PROGRAM_MEMORY.P2
+W0 -W3  @DIVFF64.P3
+W0 -W1  @DIV3232B.P4
+W0 -W3  @F64TO48.P5
+W0      @delay_us1.P6
+W0 -W1  @ADDFF.P7
+W0 -W1  @DIVFF.P8
+W0      @delay_ms1.P9
+W0 -W1  @MULFF.P10
+W0 -W1  @SFTOI.P11
+W0 -W3  @SI64TOF64.P12
+W1      @SCRATCH
+W1      @WRITE_PACKED_MEMORY.P1
+W1L     @I2C_READ_1.P2
+W1L     @I2C_WRITE_1.P3
+W1      @READ_PACKED_MEMORY.P4
+W2      @WRITE_PACKED_MEMORY.P1
+W2 -W3  @DIV3232B.P2
+W2      @READ_PACKED_MEMORY.P3
+W2 -W3  @ADDFF.P4
+W2 -W3  @DIVFF.P5
+W2      @READ_PROGRAM_MEMORY.P6
+W2 -W3  @MULFF.P7
+W3      @READ_PACKED_MEMORY.P1
+W3      @WRITE_PACKED_MEMORY.P2
+W3      @READ_PROGRAM_MEMORY.P3
+W4 -W7  @DIVFF64.P1
+W4 -W7  @MULFF64.P2
+800-801 strtok.save
+802.0   FlashLEDUnder
+802.1   FlashLEDOver
+802.2   set_mode
+802.3   Ack1
+802.4   Ack2
+802.5   Ack3
+803     flash_LED_Under
+804     flash_LED_Over
+805     toggle_pin_under
+806     toggle_pin_over
+807     flash_dot
+808-809 DC_V
+80A-80B DC_V7seg
+80C-823 DC_Average
+824-827 menuCount
+828     flash_LED
+829     DebugLoopCount
+82A     HangCount
+82B     oldloop
+82C     Updateloop
+82D     ReadI2CCount
+82E     I2C_wait
+82F     roi
+830-831 real_data
+832-835 vout
+836-839 vin
+83A-83D R1
+83E-841 R2
+842     sib
+843     hnoi
+844     mode
+845     State
+846-847 UnderResTimeCount
+848-849 OverResTimeCount
+84A-84B UnderTimeCount
+84C-84D OverTimeCount
+84E-84F OverTimSetValue
+850-851 UnderResTimSetValue
+852-853 UnderTimSetValue
+854-855 OverResTimSetValue
+856-857 UnderValue
+858-859 OverValue
+85A-85B UnderResValue
+85C-85D OverResValue
+85E-85F StartMeasureCount
+860     TIMER_Flag
+861     SegmentDisplay.cnt
+862-863 SegmentDisplay.V_to_Seg
+864-865 SegmentDisplay.Count_Display
+866-867 buttonRead.State
+868-869 buttonRead.deb
+86A     MAIN.i
+86C-86D MAIN.Count_Healty
+86E-86F buttonRead.tempValue
+86E     Read_VDC.i
+86E     read_ext_eeprom.address
+86F     read_ext_eeprom.data
+870     write_ext_eeprom.address
+870-871 Soft_read_adc_mcp.result
+871     write_ext_eeprom.data
+872     Soft_read_adc_mcp.status
+874     i2cReadByte.inByte
+874     SoftI2CWriteByte.data
+874.0   ext_eeprom_ready.ack
+875     i2cReadByte.n
+875     SoftI2CWriteByte.i
+876     SoftI2CWriteByte.ack
+88C     SegmentDisplay.j
+88D     SegmentDisplay.data_out
+88E     SegmentDisplay.data_U2
+88F     SegmentDisplay.data_U1
+1780-17FF Stack
+
+ROM Allocation:
+05BE  @delay_ms1
+0200  SEGMENT_MAP
+0216  SEGMENT_SELECT
+05CE  SoftI2CInit
+088E  i2cNack
+0870  i2cAck
+05DC  SoftI2CStart
+0658  SoftI2CStop
+05F6  SoftI2CWriteByte
+0826  i2cReadByte
+0672  Soft_adc_init
+08AC  Soft_read_adc_mcp
+0748  @I2C_READ_1
+069C  @I2C_WRITE_1
+06FA  ext_eeprom_ready
+0E3E  write_ext_eeprom
+07A0  read_ext_eeprom
+030A  SegmentDisplay
+117C  StartTimer
+1182  StopTimer
+1186  Read_VDC
+08EA  @SI64TOF64
+094E  @MULFF64
+0A5C  @DIVFF64
+0B64  @F64TO48
+0BA8  @ADDFF
+0D48  @DIVFF
+0E12  @SFTOI
+10BE  @MULFF
+0E96  buttonRead
+0226  TIMER3_isr
+0572  TIMER2_isr
+142E  MAIN
+142E  @cinit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    D:\jobESP\DC Voltage Monitoring Relay\firmware\DIN RAIL No Crytal\PIC24 CCS Project -24 UN\
+
+Project Files:
+    main.c
+    main.h
+    C:\Program Files (x86)\PICC\devices\24FJ16GA004.h
+    C:\Program Files (x86)\PICC\drivers\stdio.h
+    C:\Program Files (x86)\PICC\drivers\string.h
+    C:\Program Files (x86)\PICC\drivers\stddef.h
+    C:\Program Files (x86)\PICC\drivers\ctype.h
+
+Units:
+    D:\jobESP\DC Voltage Monitoring Relay\firmware\DIN RAIL No Crytal\PIC24 CCS Project -24 UN\main (main)
+
+Compiler Settings:
+    Processor:      PIC24FJ16GA004
+    Pointer Size:   16
+    ADC Range:      0-65535
+    Opt Level:      0
+    Short,Int,Long: SIGNED: 8,16,32
+    Float,Double:   32,64
+
+Output Files:
+    Errors:      main.err
+    Ext Symbols: main.esym
+    INHX8:       main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.PJT
+    Call Tree:   main.tre
+    Statistics:  main.sta

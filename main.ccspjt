@@ -1,0 +1,86 @@
+[PROJECT]
+Target=main.hex
+Development_Mode=
+Processor_Text=PIC24FJ16GA002
+ToolSuite=CCS
+Processor=0x007D
+[C:\Users\ESPOWER CORPERATION\Documents\PIC24 CCS Project\main]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+[mru-list]
+1=main.c
+[Windows]
+0=0000 %S 0 0 796 451 3 0
+[Units]
+Link=0
+Count=1
+1=main.c
+[Opened Files]
+1=main.c
+2=main.h
+3=C:\Program Files (x86)\PICC\Devices\24FJ16GA002.h
+4=
+5=
+6=
+t1=1
+t2=1
+Count=3
+t3=1
+[Directories]
+Include=C:\Program Files (x86)\PICC\Devices;C:\Program Files (x86)\PICC\Drivers;
+Library=
+LinkerScript=
+[defines]
+enabled=0
+D1=
+V1=
+[fileformats]
+forcecoff=0
+debug=4
+error=2
+object=0
+list=0
+scratch=0
+sta=1
+tre=1
+allerrors=1
+allwarnings=1
+stayupne=3
+stayupoe=0
+[Target Data]
+BuildTool=C-COMPILER
+OptionString=+FD
+AdditionalOptionString=
+BuildRequired=1
+[main.c]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[ProjectLog]
+Days=1
+D1=28-03-2017
+D1_L=12
+D1_L1=[41587]Project Opened.
+D1_L2=[41620]Started Editing.
+D1_L3=[42026]Stopped Editing.
+TotalEdit=7
+TotalDebug=0
+D1_E=7
+D1_D=0
+D1_L4=[42212]Started Editing.
+D1_L5=[42711]Stopped Editing.
+D1_L6=[42937]Project Closed.
+D1_L7=[44640]Project Opened.
+D1_L8=[45731]Project Closed.
+D1_L9=[47480]Project Opened.
+D1_L10=[47546]Started Editing.
+D1_L11=[47589]Stopped Editing.
+D1_L12=[47590]Project Closed.

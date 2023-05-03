@@ -1,0 +1,26 @@
+#include <24FJ16GA002.h>
+
+#FUSES NOWDT                    //No Watch Dog Timer
+#FUSES NOJTAG                   //JTAG disabled
+#FUSES NOPROTECT                //Code not protected from reading
+#FUSES NOWRT                    //Program memory not write protected
+#FUSES NODEBUG                  //No Debug mode for ICD
+#FUSES ICSP1                    //ICD uses PGC1/PGD1 pins
+#FUSES IOL1WAY                  //Allows only one reconfiguration of peripheral pins
+#FUSES WINDIS                   //Watch Dog Timer in non-Window mode
+#FUSES WPRES128                 //Watch Dog Timer PreScalar 1:128
+#FUSES WPOSTS16                 //Watch Dog Timer PostScalar 1:32768
+#FUSES IESO                     //Internal External Switch Over mode enabled
+//#FUSES FRC_PS                   //Fast RC Oscillator with Post Scaler
+#FUSES NOCKSFSM                 //Clock Switching is disabled, fail Safe clock monitor is disabled
+#FUSES NOOSCIO                  //OSC2 is clock output
+//#FUSES NOPR                     //Pimary oscillaotr disabled
+#FUSES I2C1SELD
+#FUSES HS
+
+#use delay(clock=32MHz, oscillator=32MHz)
+
+//#use delay(clock=32000000,RESTART_WDT)
+
+
+//#use delay(clock=20000000)

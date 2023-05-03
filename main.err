@@ -1,0 +1,12 @@
+>>> Warning 205 "main.c" Line 807(1,1): Unsigned variable is never less than zero
+>>> Warning 203 "main.c" Line 1675(1,1): Condition always TRUE
+>>> Warning 202 "main.c" Line 20(31,46): Variable never used:   toggle_pin_over
+>>> Warning 202 "main.c" Line 67(32,41): Variable never used:   flash_LED
+>>> Warning 202 "main.c" Line 69(39,53): Variable never used:   DebugLoopCount
+>>> Warning 202 "main.c" Line 71(34,43): Variable never used:   HangCount
+>>> Warning 202 "main.c" Line 71(45,52): Variable never used:   oldloop
+>>> Warning 202 "main.c" Line 71(59,69): Variable never used:   Updateloop
+>>> Warning 202 "main.c" Line 73(40,48): Variable never used:   I2C_wait
+>>> Warning 202 "main.c" Line 75(36,40): Variable never used:   Ack3
+      Memory usage:   ROM=52%      RAM=6% - 7%
+      0 Errors,  10 Warnings.

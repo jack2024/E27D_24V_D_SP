@@ -1,0 +1,4605 @@
+CCS PCD C Compiler, Version 4.104, 5967               14-¡.¤.-20 08:59
+
+               Filename: D:\jobESP\DC Voltage Monitoring Relay\firmware\DIN RAIL No Crytal\PIC24 CCS Project -24 UN\main.lst
+
+               ROM used: 5892 bytes (52%)
+                         Largest free fragment is 5368
+               RAM used: 243 (6%) at main() level
+                         272 (7%) worst case
+               Stack:    7 worst case (4 in main + 3 for interrupts)
+
+*
+0000:  GOTO    142E
+*
+0022:  DATA    72,05,00
+0024:  DATA    26,02,00
+.................... #include "D:\jobESP\DC Voltage Monitoring Relay\firmware\DIN RAIL No Crytal\PIC24 CCS Project -24 UN\main.h" 
+.................... #include <24FJ16GA004.h> 
+.................... //////// Standard Header file for the PIC24FJ16GA004 device //////////////// 
+.................... #device PIC24FJ16GA004 
+.................... #list 
+....................  
+....................  
+.................... //////////////////////////////////////////////////////// 
+.................... /* 
+.................... #FUSES WDT 
+.................... #FUSES WDT64                    //Watch Dog Timer uses 1:64 Postscale 
+.................... #FUSES HS                       //High speed Osc (> 4mhz) 
+.................... #FUSES PROTECT                //Code not protected from reading 
+.................... //#FUSES IESO                     //Internal External Switch Over mode enabled 
+.................... #FUSES BROWNOUT                 //Reset when brownout detected 
+.................... //#FUSES BORV20                   //Brownout reset at 2.0V 
+.................... #FUSES NOPUT                    //No Power Up Timer 
+.................... #FUSES NOCPD                    //No EE protection 
+.................... //#FUSES STVREN                   //Stack full/underflow will cause reset 
+.................... #FUSES NODEBUG                  //No Debug mode for ICD 
+.................... //#FUSES LVP                      //Low Voltage Programming on B3(PIC16) or B5(PIC18) 
+.................... //#FUSES NOWRT                    //Program memory not write protected 
+.................... //#FUSES NOWRTD                   //Data EEPROM not write protected 
+.................... #FUSES NOEBTR                   //Memory not protected from table reads 
+.................... #FUSES NOCPB                    //No Boot Block code protection 
+.................... #FUSES NOEBTRB                  //Boot block not protected from table reads 
+.................... #FUSES NOWRTC                   //configuration not registers write protected 
+.................... #FUSES NOWRTB                   //Boot block not write protected 
+.................... //#FUSES FCMEN                    //Fail-safe clock monitor enabled 
+.................... #FUSES NOXINST                  //Extended set extension and Indexed Addressing mode disabled (Legacy mode) 
+.................... #FUSES PBADEN                   //PORTB pins are configured as analog input channels on RESET 
+.................... #FUSES LPT1OSC                  //Timer1 configured for low-power operation 
+.................... #FUSES MCLR                     //Master Clear pin enabled 
+.................... */ 
+.................... ///////////////////////////////////////////////////////// 
+....................  
+....................  
+....................  
+.................... //#FUSES NOWDT                    //No Watch Dog Timer 
+....................  
+....................  
+.................... //#FUSES WDT32                    //Watch Dog Timer uses 1:64 Postscale 
+.................... #FUSES NOJTAG                   //JTAG disabled 
+.................... #FUSES PROTECT                //Code not protected from reading 
+.................... #FUSES NOWRT                    //Program memory not write protected 
+.................... #FUSES NODEBUG                  //No Debug mode for ICD 
+.................... #FUSES ICSP1                    //ICD uses PGC1/PGD1 pins 
+.................... #FUSES IOL1WAY                  //Allows only one reconfiguration of peripheral pins 
+.................... #FUSES WDT        //jj 
+.................... #FUSES WINDIS                   //Watch Dog Timer in non-Window mode 
+.................... #FUSES WPRES32                 //Watch Dog Timer PreScalar 1:128 
+.................... #FUSES WPOSTS16   //jj             //Watch Dog Timer PostScalar 1:32768 
+....................  
+.................... #FUSES IESO     //jj                //Internal External Switch Over mode enabled 
+....................  
+.................... //#FUSES FRC_PS                   //Fast RC Oscillator with Post Scaler 
+.................... #FUSES NOCKSFSM                 //Clock Switching is disabled, fail Safe clock monitor is disabled 
+.................... //#FUSES CKSFSM 
+....................  
+.................... #FUSES NOOSCIO                  //OSC2 is clock output 
+.................... //#FUSES NOPR                     //Pimary oscillaotr disabled 
+.................... #FUSES I2C1SELD 
+.................... //#FUSES HS 
+....................  
+.................... #use delay(clock=8000000, oscillator=8000000) 
+*
+05BE:  CP0     W0
+05C0:  BTSC.B  42.1
+05C2:  BRA     5CC
+05C4:  REPEAT  #F99
+05C6:  NOP     
+05C8:  DEC     W0,W0
+05CA:  BRA     5BE
+05CC:  RETURN  
+....................  
+.................... //#use i2c(Master,Slow,sda=PIN_A0,scl=PIN_A1,force_hw) 
+.................... //#use delay(clock=32000000,RESTART_WDT) 
+....................  
+....................  
+.................... //#use delay(clock=20000000) 
+....................  
+....................  
+.................... /* 
+....................  
+.................... #FUSES NOWDT                    //No Watch Dog Timer 
+.................... #FUSES NOJTAG                   //JTAG disabled 
+.................... #FUSES NOPROTECT                //Code not protected from reading 
+.................... #FUSES NOWRT                    //Program memory not write protected 
+.................... #FUSES NODEBUG                  //No Debug mode for ICD 
+.................... #FUSES ICSP1                    //ICD uses PGC1/PGD1 pins 
+.................... #FUSES IOL1WAY                  //Allows only one reconfiguration of peripheral pins 
+.................... #FUSES WINDIS                   //Watch Dog Timer in non-Window mode 
+.................... #FUSES WPRES128                 //Watch Dog Timer PreScalar 1:128 
+.................... #FUSES WPOSTS8                  //Watch Dog Timer PostScalar 1:128 
+.................... #FUSES IESO                     //Internal External Switch Over mode enabled 
+.................... //#FUSES FRC_PS                   //Fast RC Oscillator with Post Scaler 
+.................... #FUSES NOCKSFSM                 //Clock Switching is disabled, fail Safe clock monitor is disabled 
+.................... #FUSES NOOSCIO                  //OSC2 is clock output 
+.................... #FUSES HS                       //Crystal osc <= 4mhz for PCM/PCH , 3mhz to 10 mhz for PCD 
+.................... #FUSES I2C1SELD               
+....................  
+.................... #use delay(clock=8000000,RESTART_WDT) 
+.................... */ 
+....................  
+.................... #include <stdio.h> 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996,2003 Custom Computer Services           //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #ifndef _STDIO 
+.................... #define _STDIO 
+.................... #include <string.h> 
+.................... //////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996,2008 Custom Computer Services            //// 
+.................... //// This source code may only be used by licensed users of the CCS C   //// 
+.................... //// compiler.  This source code may only be distributed to other       //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction  //// 
+.................... //// or distribution is permitted without written permission.           //// 
+.................... //// Derivative programs created using this software in object code     //// 
+.................... //// form are not restricted in any way.                                //// 
+.................... //////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #ifndef _STRING 
+.................... #define _STRING 
+.................... #include <stddef.h> 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996,2003 Custom Computer Services           //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #ifndef _STDDEF 
+....................  
+.................... #define _STDDEF 
+....................  
+.................... #if sizeof(unsigned int8 *)==1 
+.................... #define ptrdiff_t unsigned int8 
+.................... #else 
+.................... #define ptrdiff_t unsigned int16 
+.................... #endif 
+....................  
+.................... #define size_t unsigned int8 
+.................... #define wchar_t char 
+.................... #define NULL 0 
+....................  
+.................... #define offsetof(s,f) (offsetofbit(s,f)/8) 
+....................  
+.................... #endif 
+....................  
+.................... #include <ctype.h> 
+.................... //////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996,2003 Custom Computer Services            //// 
+.................... //// This source code may only be used by licensed users of the CCS C   //// 
+.................... //// compiler.  This source code may only be distributed to other       //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction  //// 
+.................... //// or distribution is permitted without written permission.           //// 
+.................... //// Derivative programs created using this software in object code     //// 
+.................... //// form are not restricted in any way.                                //// 
+.................... //////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #ifndef _CTYPE 
+.................... #define _CTYPE 
+....................  
+.................... #define islower(x)  isamong(x,"abcdefghijklmnopqrstuvwxyz") 
+.................... #define isupper(x)  isamong(x,"ABCDEFGHIJKLMNOPQRSTUVWXYZ") 
+.................... #define isalnum(x)  isamong(x,"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") 
+.................... #define isalpha(x)  isamong(x,"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") 
+.................... #define isdigit(x)  isamong(x,"0123456789") 
+.................... #define isspace(x)  ((x)==' ') 
+.................... #define isxdigit(x) isamong(x,"0123456789ABCDEFabcdef") 
+.................... #define iscntrl(x)  ((x)<' ') 
+.................... #define isprint(x)  ((x)>=' ') 
+.................... #define isgraph(x)  ((x)>' ') 
+.................... #define ispunct(x)  (((x)>' ')&&!isalnum(x)) 
+....................  
+.................... #endif 
+....................  
+....................  
+....................  
+....................  
+....................  
+.................... ////////////////////////////////////////////// 
+.................... //// Uncomment the following define to    //// 
+.................... //// allow some functions to use a        //// 
+.................... //// quicker algorithm, but use more ROM  //// 
+.................... ////                                      //// 
+.................... //// #define FASTER_BUT_MORE_ROM          //// 
+.................... ////////////////////////////////////////////// 
+....................  
+....................  
+....................  
+.................... /*Copying functions*/ 
+.................... /* standard template: 
+....................    void *memmove(void *s1, void *s2, size_t n). 
+....................    Copies max of n characters safely (not following ending '\0') 
+....................    from s2 in s1; if s2 has less than n characters, appends 0 */ 
+....................  
+.................... char *memmove(void *s1,char *s2,size_t n) 
+.................... { 
+....................    char *sc1; 
+....................    char *sc2; 
+....................    sc1=s1; 
+....................    sc2=s2; 
+....................    if(sc2<sc1 && sc1 <sc2 +n) 
+....................       for(sc1+=n,sc2+=n;0<n;--n) 
+....................          *--sc1=*--sc2; 
+....................    else 
+....................       for(;0<n;--n) 
+....................          *sc1++=*sc2++; 
+....................   return s1; 
+....................   } 
+....................  
+.................... /* Standard template: char *strcpy(char *s1, const char *s2) 
+....................    copies the string s2 including the null character to s1. 
+....................    This is a compiler built in to handle the different address 
+....................    spaces */ 
+....................  
+.................... #define strcopy strcpy 
+....................  
+.................... /* standard template: 
+....................    char *strncpy(char *s1, const char *s2, size_t n). 
+....................    Copies max of n characters (not following ending '\0') 
+....................    from s2 in s1; if s2 has less than n characters, appends 0 */ 
+....................  
+.................... char *strncpy(char *s1, char *s2, size_t n) 
+.................... { 
+....................   char *s; 
+....................  
+....................   for (s = s1; n > 0 && *s2 != '\0'; n--) 
+....................      *s++ = *s2++; 
+....................   for (; n > 0; n--) 
+....................      *s++ = '\0'; 
+....................  
+....................   return(s1); 
+.................... } 
+.................... /***********************************************************/ 
+....................  
+.................... /*concatenation functions*/ 
+.................... /* standard template: char *strcat(char *s1, const char *s2) 
+.................... appends s2 to s1*/ 
+....................  
+.................... char *strcat(char *s1, char *s2) 
+.................... { 
+....................    char *s; 
+....................  
+....................    for (s = s1; *s != '\0'; ++s); 
+....................    while(*s2 != '\0') 
+....................    { 
+....................       *s = *s2; 
+....................       ++s; 
+....................       ++s2; 
+....................    } 
+....................  
+....................    *s = '\0'; 
+....................    return(s1); 
+.................... } 
+.................... /* standard template: char *strncat(char *s1, char *s2,size_t n) 
+.................... appends not more than n characters from s2 to s1*/ 
+....................  
+.................... char *strncat(char *s1, char *s2, size_t n) 
+.................... { 
+....................    char *s; 
+....................  
+....................    for (s = s1; *s != '\0'; ++s); 
+....................    while(*s2 != '\0' && 0<n) 
+....................    { 
+....................       *s = *s2; 
+....................       ++s; 
+....................       ++s2; 
+....................       --n; 
+....................    } 
+....................  
+....................    *s = '\0'; 
+....................    return(s1); 
+.................... } 
+....................  
+.................... /***********************************************************/ 
+....................  
+....................  
+.................... /*comparison functions*/ 
+.................... /* standard template: signed int memcmp(void *s1, void *s2). 
+....................    Compares s1 & s2; returns -1 if s1<s2, 0 if s1=s2, 1 if s1>s2 */ 
+....................  
+.................... signed int8 memcmp(void * s1,char *s2,size_t n) 
+.................... { 
+.................... char *su1, *su2; 
+.................... for(su1=s1, su2=s2; 0<n; ++su1, ++su2, --n) 
+.................... { 
+....................    if(*su1!=*su2) 
+....................       return ((*su1<*su2)?-1:+1); 
+.................... } 
+.................... return 0; 
+.................... } 
+....................  
+.................... /* standard template: int strcmp(const char *s1, const char *s2). 
+....................    Compares s1 & s2; returns -1 if s1<s2, 0 if s1=s2, 1 if s1>s2 */ 
+....................  
+.................... signed int8 strcmp(char *s1, char *s2) 
+.................... { 
+....................    for (; *s1 == *s2; s1++, s2++) 
+....................       if (*s1 == '\0') 
+....................          return(0); 
+....................    return((*s1 < *s2) ? -1: 1); 
+.................... } 
+.................... /* standard template: int strcoll(const char *s1, const char *s2). 
+....................    Compares s1 & s2; returns -1 if s1<s2, 0 if s1=s2, 1 if s1>s2 */ 
+....................  
+.................... signed int8 strcoll(char *s1, char *s2) 
+.................... { 
+....................    for (; *s1 == *s2; s1++, s2++) 
+....................       if (*s1 == '\0') 
+....................          return(0); 
+....................    return((*s1 < *s2) ? -1: 1); 
+.................... } 
+....................  
+.................... /* standard template: 
+....................    int strncmp(const char *s1, const char *s2, size_t n). 
+....................    Compares max of n characters (not following 0) from s1 to s2; 
+....................    returns same as strcmp */ 
+....................  
+.................... signed int8 strncmp(char *s1, char *s2, size_t n) 
+.................... { 
+....................    for (; n > 0; s1++, s2++, n--) 
+....................       if (*s1 != *s2) 
+....................          return((*s1 <*s2) ? -1: 1); 
+....................       else if (*s1 == '\0') 
+....................          return(0); 
+....................    return(0); 
+.................... } 
+.................... /* standard template: 
+....................    int strxfrm(const char *s1, const char *s2, size_t n). 
+....................    transforms maximum of n characters from s2 and places them into s1*/ 
+.................... size_t strxfrm(char *s1, char *s2, size_t n) 
+.................... { 
+....................   char *s; 
+....................   unsigned int8 n1; 
+....................   n1=n; 
+....................   for (s = s1; n > 0 && *s2 != '\0'; n--) 
+....................      *s++ = *s2++; 
+....................   for (; n > 0; n--) 
+....................      *s++ = '\0'; 
+....................  
+....................   return(n1); 
+.................... } 
+....................  
+....................  
+....................  
+....................  
+....................  
+.................... /***********************************************************/ 
+.................... /*Search functions*/ 
+.................... /* standard template: void *memchr(const char *s, int c). 
+....................    Finds first occurrence of c in n characters of s */ 
+....................  
+.................... char *memchr(void *s,unsigned int8 c,size_t n) 
+.................... { 
+....................    char uc; 
+....................    char *su; 
+....................    uc=c; 
+....................    for(su=s;0<n;++su,--n) 
+....................       if(*su==uc) 
+....................       return su; 
+....................    return NULL; 
+.................... } 
+....................  
+.................... /* standard template: char *strchr(const char *s, int c). 
+....................    Finds first occurrence of c in s */ 
+....................  
+.................... char *strchr(char *s, unsigned int8 c) 
+.................... { 
+....................    for (; *s != c; s++) 
+....................       if (*s == '\0') 
+....................          return(0); 
+....................    return(s); 
+.................... } 
+.................... /* standard template: 
+....................    size_t strcspn(const char *s1, const char *s2). 
+....................    Computes length of max initial segment of s1 that 
+....................    consists entirely of characters NOT from s2*/ 
+....................  
+.................... unsigned int8  strcspn(char *s1, char *s2) 
+.................... { 
+....................    char *sc1, *sc2; 
+....................  
+....................    for (sc1 = s1; *sc1 != 0; sc1++) 
+....................       for (sc2 = s2; *sc2 != 0; sc2++) 
+....................          if (*sc1 == *sc2) 
+....................             return(sc1 - s1); 
+....................    return(sc1 - s1); 
+.................... } 
+.................... /* standard template: 
+....................    char *strpbrk(const char *s1, const char *s2). 
+....................    Locates first occurence of any character from s2 in s1; 
+....................    returns s1 if s2 is empty string */ 
+....................  
+.................... char *strpbrk(char *s1, char *s2) 
+.................... { 
+....................    char *sc1, *sc2; 
+....................  
+....................    for (sc1 = s1; *sc1 != 0; sc1++) 
+....................       for (sc2 = s2; *sc2 != 0; sc2++) 
+....................          if (*sc1 == *sc2) 
+....................             return(sc1); 
+....................    return(0); 
+.................... } 
+....................  
+....................  
+.................... /* standard template: char *strrchr(const char *s, int c). 
+....................    Finds last occurrence of c in s */ 
+....................  
+.................... char *strrchr(char *s, unsigned int8 c) 
+.................... { 
+....................    char *p; 
+....................  
+....................    for (p = 0; ; s++) 
+....................    { 
+....................       if (*s == c) 
+....................          p = s; 
+....................       if (*s == '\0') 
+....................          return(p); 
+....................    } 
+.................... } 
+.................... /* computes length of max initial segment of s1 consisting 
+....................    entirely of characters from s2 */ 
+....................  
+.................... unsigned int8  strspn(char *s1, char *s2) 
+.................... { 
+....................    char *sc1, *sc2; 
+....................  
+....................    for (sc1 = s1; *sc1 != 0; sc1++) 
+....................       for (sc2 = s2; ; sc2++) 
+....................     if (*sc2 == '\0') 
+....................        return(sc1 - s1); 
+....................          else if (*sc1 == *sc2) 
+....................             break; 
+....................    return(sc1 - s1); 
+.................... } 
+.................... /* standard template: 
+....................    char *strstr(const char *s1, const char *s2); 
+....................    Locates first occurence of character sequence s2 in s1; 
+....................    returns 0 if s2 is empty string 
+....................  
+....................    Uncomment #define FASTER_BUT_MORE_ROM at the top of the 
+....................    file to use the faster algorithm */ 
+.................... char *strstr(char *s1, char *s2) 
+.................... { 
+....................    char *s, *t; 
+....................  
+....................    #ifdef FASTER_BUT_MORE_ROM 
+....................    if (*s2 == '\0') 
+....................          return(s1); 
+....................    #endif 
+....................  
+....................    while (*s1) 
+....................    { 
+....................       for(s = s1, t = s2; *t && (*s == *t); ++s, ++t); 
+....................  
+....................       if (*t == '\0') 
+....................          return s1; 
+....................       ++s1; 
+....................       #ifdef FASTER_BUT_MORE_ROM 
+....................          while(*s1 != '\0' && *s1 != *s2) 
+....................             ++s1; 
+....................       #endif 
+....................    } 
+....................    return 0; 
+.................... } 
+....................  
+.................... /* standard template: char *strtok(char *s1, const char *s2). 
+....................  
+....................    Finds next token in s1 delimited by a character from separator 
+....................    string s2 (which can be different from call to call).  First call 
+....................    starts at beginning of s1 searching for first character NOT 
+....................    contained in s2; returns 0 if none is found. 
+....................    If one is found, it is the start of first token (return value). 
+....................    Function then searches from there for a character contained in s2. 
+....................    If none is found, current token extends to end of s1, and subsequent 
+....................    searches for a token will return 0.  If one is found, it is 
+....................    overwritten by '\0', which terminates current token.  Function saves 
+....................    pointer to following character from which next search will start. 
+....................    Each subsequent call, with 0 as first argument, starts searching 
+....................    from saved pointer */ 
+....................  
+.................... char *strtok(char *s1, char *s2) 
+.................... { 
+....................    char *beg, *end; 
+....................    static char *save; 
+*
+1490:  CLR     800
+....................  
+....................    beg = (s1)? s1: save; 
+....................    beg += strspn(beg, s2); 
+....................    if (*beg == '\0') 
+....................    { 
+....................       *save = ' '; 
+....................       return(0); 
+....................    } 
+....................    end = strpbrk(beg, s2); 
+....................    if (*end != '\0') 
+....................    { 
+....................       *end = '\0'; 
+....................       end++; 
+....................    } 
+....................    save = end; 
+....................    return(beg); 
+.................... } 
+....................  
+.................... /*****************************************************************/ 
+.................... /*Miscellaneous functions*/ 
+.................... /* standard template 
+.................... maps error number in errnum to an error message string 
+.................... Returns: Pointer to string 
+.................... */ 
+.................... #ifdef _ERRNO 
+.................... char * strerror(unsigned int8 errnum) 
+.................... { 
+.................... char s[15]; 
+.................... switch( errnum) 
+.................... { 
+.................... case 0: 
+....................    strcpy(s,"no errors"); 
+....................    return s; 
+.................... case EDOM : 
+....................    strcpy(s,"domain error"); 
+....................    return s; 
+.................... case ERANGE: 
+....................    strcpy(s,"range error"); 
+....................    return s; 
+.................... } 
+.................... } 
+.................... #ENDIF 
+.................... /* standard template: size_t strlen(const char *s). 
+....................    Computes length of s1 (preceding terminating 0) */ 
+....................  
+.................... unsigned int8 strlen(char *s) 
+.................... { 
+....................    char *sc; 
+....................  
+....................    for (sc = s; *sc != 0; sc++); 
+....................    return(sc - s); 
+.................... } 
+....................  
+.................... /* standard template: size_t stricmp(const char *s1, const char *s2). 
+....................    Compares s1 to s2 ignoring case (upper vs. lower) */ 
+....................  
+.................... signed int8 stricmp(char *s1, char *s2) 
+.................... { 
+....................  for(; *s1==*s2||(isalpha(*s1)&&isalpha(*s2)&&(*s1==*s2+32||*s2==*s1+32)); 
+....................     s1++, s2++) 
+....................     if (*s1 == '\0') 
+....................        return(0); 
+....................  return((*s1 < *s2) ? -1: 1); 
+.................... } 
+....................  
+....................  
+.................... /* standard template: char *strlwr(char *s). 
+....................    Replaces uppercase letters by lowercase; 
+....................    returns pointer to new string s */ 
+....................  
+.................... char *strlwr(char *s) 
+.................... { 
+....................    char *p; 
+....................  
+....................    for (p = s; *p != '\0'; p++) 
+....................       if (*p >= 'A' && *p <='Z') 
+....................          *p += 'a' - 'A'; 
+....................    return(s); 
+.................... } 
+....................  
+....................  
+.................... /************************************************************/ 
+....................  
+....................  
+.................... #endif 
+....................  
+.................... #ifndef getc 
+.................... #define getc getch 
+.................... #define getchar getch 
+.................... #define puts(s) {printf(s); putchar(13); putchar(10);} 
+.................... #define putc putchar 
+.................... #endif 
+.................... /* maps error number to an error message. Writes a sequence of characters to 
+.................... stderr stream thus: if s is not null then string pointed to by s follwed by 
+.................... a colon (:) and a space and the appropriate error message returned by strerror 
+.................... function with argument errno 
+....................  
+.................... Returns: no value 
+.................... */ 
+....................  
+.................... #ifdef _ERRNO 
+.................... void perror(char *s) 
+.................... { 
+....................   if(s) 
+....................   fprintf(STDERR,"%s: ",s); 
+....................   fprintf(STDERR,"%s\r\n",strerror(errno)); 
+.................... } 
+.................... #endif 
+.................... #endif 
+....................  
+.................... #include <string.h> 
+.................... //////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996,2008 Custom Computer Services            //// 
+.................... //// This source code may only be used by licensed users of the CCS C   //// 
+.................... //// compiler.  This source code may only be distributed to other       //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction  //// 
+.................... //// or distribution is permitted without written permission.           //// 
+.................... //// Derivative programs created using this software in object code     //// 
+.................... //// form are not restricted in any way.                                //// 
+.................... //////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... #ifndef _STRING 
+.................... #define _STRING 
+.................... #include <stddef.h> 
+.................... #include <ctype.h> 
+....................  
+....................  
+....................  
+.................... ////////////////////////////////////////////// 
+.................... //// Uncomment the following define to    //// 
+.................... //// allow some functions to use a        //// 
+.................... //// quicker algorithm, but use more ROM  //// 
+.................... ////                                      //// 
+.................... //// #define FASTER_BUT_MORE_ROM          //// 
+.................... ////////////////////////////////////////////// 
+....................  
+....................  
+....................  
+.................... /*Copying functions*/ 
+.................... /* standard template: 
+....................    void *memmove(void *s1, void *s2, size_t n). 
+....................    Copies max of n characters safely (not following ending '\0') 
+....................    from s2 in s1; if s2 has less than n characters, appends 0 */ 
+....................  
+.................... char *memmove(void *s1,char *s2,size_t n) 
+.................... { 
+....................    char *sc1; 
+....................    char *sc2; 
+....................    sc1=s1; 
+....................    sc2=s2; 
+....................    if(sc2<sc1 && sc1 <sc2 +n) 
+....................       for(sc1+=n,sc2+=n;0<n;--n) 
+....................          *--sc1=*--sc2; 
+....................    else 
+....................       for(;0<n;--n) 
+....................          *sc1++=*sc2++; 
+....................   return s1; 
+....................   } 
+....................  
+.................... /* Standard template: char *strcpy(char *s1, const char *s2) 
+....................    copies the string s2 including the null character to s1. 
+....................    This is a compiler built in to handle the different address 
+....................    spaces */ 
+....................  
+.................... #define strcopy strcpy 
+....................  
+.................... /* standard template: 
+....................    char *strncpy(char *s1, const char *s2, size_t n). 
+....................    Copies max of n characters (not following ending '\0') 
+....................    from s2 in s1; if s2 has less than n characters, appends 0 */ 
+....................  
+.................... char *strncpy(char *s1, char *s2, size_t n) 
+.................... { 
+....................   char *s; 
+....................  
+....................   for (s = s1; n > 0 && *s2 != '\0'; n--) 
+....................      *s++ = *s2++; 
+....................   for (; n > 0; n--) 
+....................      *s++ = '\0'; 
+....................  
+....................   return(s1); 
+.................... } 
+.................... /***********************************************************/ 
+....................  
+.................... /*concatenation functions*/ 
+.................... /* standard template: char *strcat(char *s1, const char *s2) 
+.................... appends s2 to s1*/ 
+....................  
+.................... char *strcat(char *s1, char *s2) 
+.................... { 
+....................    char *s; 
+....................  
+....................    for (s = s1; *s != '\0'; ++s); 
+....................    while(*s2 != '\0') 
+....................    { 
+....................       *s = *s2; 
+....................       ++s; 
+....................       ++s2; 
+....................    } 
+....................  
+....................    *s = '\0'; 
+....................    return(s1); 
+.................... } 
+.................... /* standard template: char *strncat(char *s1, char *s2,size_t n) 
+.................... appends not more than n characters from s2 to s1*/ 
+....................  
+.................... char *strncat(char *s1, char *s2, size_t n) 
+.................... { 
+....................    char *s; 
+....................  
+....................    for (s = s1; *s != '\0'; ++s); 
+....................    while(*s2 != '\0' && 0<n) 
+....................    { 
+....................       *s = *s2; 
+....................       ++s; 
+....................       ++s2; 
+....................       --n; 
+....................    } 
+....................  
+....................    *s = '\0'; 
+....................    return(s1); 
+.................... } 
+....................  
+.................... /***********************************************************/ 
+....................  
+....................  
+.................... /*comparison functions*/ 
+.................... /* standard template: signed int memcmp(void *s1, void *s2). 
+....................    Compares s1 & s2; returns -1 if s1<s2, 0 if s1=s2, 1 if s1>s2 */ 
+....................  
+.................... signed int8 memcmp(void * s1,char *s2,size_t n) 
+.................... { 
+.................... char *su1, *su2; 
+.................... for(su1=s1, su2=s2; 0<n; ++su1, ++su2, --n) 
+.................... { 
+....................    if(*su1!=*su2) 
+....................       return ((*su1<*su2)?-1:+1); 
+.................... } 
+.................... return 0; 
+.................... } 
+....................  
+.................... /* standard template: int strcmp(const char *s1, const char *s2). 
+....................    Compares s1 & s2; returns -1 if s1<s2, 0 if s1=s2, 1 if s1>s2 */ 
+....................  
+.................... signed int8 strcmp(char *s1, char *s2) 
+.................... { 
+....................    for (; *s1 == *s2; s1++, s2++) 
+....................       if (*s1 == '\0') 
+....................          return(0); 
+....................    return((*s1 < *s2) ? -1: 1); 
+.................... } 
+.................... /* standard template: int strcoll(const char *s1, const char *s2). 
+....................    Compares s1 & s2; returns -1 if s1<s2, 0 if s1=s2, 1 if s1>s2 */ 
+....................  
+.................... signed int8 strcoll(char *s1, char *s2) 
+.................... { 
+....................    for (; *s1 == *s2; s1++, s2++) 
+....................       if (*s1 == '\0') 
+....................          return(0); 
+....................    return((*s1 < *s2) ? -1: 1); 
+.................... } 
+....................  
+.................... /* standard template: 
+....................    int strncmp(const char *s1, const char *s2, size_t n). 
+....................    Compares max of n characters (not following 0) from s1 to s2; 
+....................    returns same as strcmp */ 
+....................  
+.................... signed int8 strncmp(char *s1, char *s2, size_t n) 
+.................... { 
+....................    for (; n > 0; s1++, s2++, n--) 
+....................       if (*s1 != *s2) 
+....................          return((*s1 <*s2) ? -1: 1); 
+....................       else if (*s1 == '\0') 
+....................          return(0); 
+....................    return(0); 
+.................... } 
+.................... /* standard template: 
+....................    int strxfrm(const char *s1, const char *s2, size_t n). 
+....................    transforms maximum of n characters from s2 and places them into s1*/ 
+.................... size_t strxfrm(char *s1, char *s2, size_t n) 
+.................... { 
+....................   char *s; 
+....................   unsigned int8 n1; 
+....................   n1=n; 
+....................   for (s = s1; n > 0 && *s2 != '\0'; n--) 
+....................      *s++ = *s2++; 
+....................   for (; n > 0; n--) 
+....................      *s++ = '\0'; 
+....................  
+....................   return(n1); 
+.................... } 
+....................  
+....................  
+....................  
+....................  
+....................  
+.................... /***********************************************************/ 
+.................... /*Search functions*/ 
+.................... /* standard template: void *memchr(const char *s, int c). 
+....................    Finds first occurrence of c in n characters of s */ 
+....................  
+.................... char *memchr(void *s,unsigned int8 c,size_t n) 
+.................... { 
+....................    char uc; 
+....................    char *su; 
+....................    uc=c; 
+....................    for(su=s;0<n;++su,--n) 
+....................       if(*su==uc) 
+....................       return su; 
+....................    return NULL; 
+.................... } 
+....................  
+.................... /* standard template: char *strchr(const char *s, int c). 
+....................    Finds first occurrence of c in s */ 
+....................  
+.................... char *strchr(char *s, unsigned int8 c) 
+.................... { 
+....................    for (; *s != c; s++) 
+....................       if (*s == '\0') 
+....................          return(0); 
+....................    return(s); 
+.................... } 
+.................... /* standard template: 
+....................    size_t strcspn(const char *s1, const char *s2). 
+....................    Computes length of max initial segment of s1 that 
+....................    consists entirely of characters NOT from s2*/ 
+....................  
+.................... unsigned int8  strcspn(char *s1, char *s2) 
+.................... { 
+....................    char *sc1, *sc2; 
+....................  
+....................    for (sc1 = s1; *sc1 != 0; sc1++) 
+....................       for (sc2 = s2; *sc2 != 0; sc2++) 
+....................          if (*sc1 == *sc2) 
+....................             return(sc1 - s1); 
+....................    return(sc1 - s1); 
+.................... } 
+.................... /* standard template: 
+....................    char *strpbrk(const char *s1, const char *s2). 
+....................    Locates first occurence of any character from s2 in s1; 
+....................    returns s1 if s2 is empty string */ 
+....................  
+.................... char *strpbrk(char *s1, char *s2) 
+.................... { 
+....................    char *sc1, *sc2; 
+....................  
+....................    for (sc1 = s1; *sc1 != 0; sc1++) 
+....................       for (sc2 = s2; *sc2 != 0; sc2++) 
+....................          if (*sc1 == *sc2) 
+....................             return(sc1); 
+....................    return(0); 
+.................... } 
+....................  
+....................  
+.................... /* standard template: char *strrchr(const char *s, int c). 
+....................    Finds last occurrence of c in s */ 
+....................  
+.................... char *strrchr(char *s, unsigned int8 c) 
+.................... { 
+....................    char *p; 
+....................  
+....................    for (p = 0; ; s++) 
+....................    { 
+....................       if (*s == c) 
+....................          p = s; 
+....................       if (*s == '\0') 
+....................          return(p); 
+....................    } 
+.................... } 
+.................... /* computes length of max initial segment of s1 consisting 
+....................    entirely of characters from s2 */ 
+....................  
+.................... unsigned int8  strspn(char *s1, char *s2) 
+.................... { 
+....................    char *sc1, *sc2; 
+....................  
+....................    for (sc1 = s1; *sc1 != 0; sc1++) 
+....................       for (sc2 = s2; ; sc2++) 
+....................     if (*sc2 == '\0') 
+....................        return(sc1 - s1); 
+....................          else if (*sc1 == *sc2) 
+....................             break; 
+....................    return(sc1 - s1); 
+.................... } 
+.................... /* standard template: 
+....................    char *strstr(const char *s1, const char *s2); 
+....................    Locates first occurence of character sequence s2 in s1; 
+....................    returns 0 if s2 is empty string 
+....................  
+....................    Uncomment #define FASTER_BUT_MORE_ROM at the top of the 
+....................    file to use the faster algorithm */ 
+.................... char *strstr(char *s1, char *s2) 
+.................... { 
+....................    char *s, *t; 
+....................  
+....................    #ifdef FASTER_BUT_MORE_ROM 
+....................    if (*s2 == '\0') 
+....................          return(s1); 
+....................    #endif 
+....................  
+....................    while (*s1) 
+....................    { 
+....................       for(s = s1, t = s2; *t && (*s == *t); ++s, ++t); 
+....................  
+....................       if (*t == '\0') 
+....................          return s1; 
+....................       ++s1; 
+....................       #ifdef FASTER_BUT_MORE_ROM 
+....................          while(*s1 != '\0' && *s1 != *s2) 
+....................             ++s1; 
+....................       #endif 
+....................    } 
+....................    return 0; 
+.................... } 
+....................  
+.................... /* standard template: char *strtok(char *s1, const char *s2). 
+....................  
+....................    Finds next token in s1 delimited by a character from separator 
+....................    string s2 (which can be different from call to call).  First call 
+....................    starts at beginning of s1 searching for first character NOT 
+....................    contained in s2; returns 0 if none is found. 
+....................    If one is found, it is the start of first token (return value). 
+....................    Function then searches from there for a character contained in s2. 
+....................    If none is found, current token extends to end of s1, and subsequent 
+....................    searches for a token will return 0.  If one is found, it is 
+....................    overwritten by '\0', which terminates current token.  Function saves 
+....................    pointer to following character from which next search will start. 
+....................    Each subsequent call, with 0 as first argument, starts searching 
+....................    from saved pointer */ 
+....................  
+.................... char *strtok(char *s1, char *s2) 
+.................... { 
+....................    char *beg, *end; 
+....................    static char *save; 
+....................  
+....................    beg = (s1)? s1: save; 
+....................    beg += strspn(beg, s2); 
+....................    if (*beg == '\0') 
+....................    { 
+....................       *save = ' '; 
+....................       return(0); 
+....................    } 
+....................    end = strpbrk(beg, s2); 
+....................    if (*end != '\0') 
+....................    { 
+....................       *end = '\0'; 
+....................       end++; 
+....................    } 
+....................    save = end; 
+....................    return(beg); 
+.................... } 
+....................  
+.................... /*****************************************************************/ 
+.................... /*Miscellaneous functions*/ 
+.................... /* standard template 
+.................... maps error number in errnum to an error message string 
+.................... Returns: Pointer to string 
+.................... */ 
+.................... #ifdef _ERRNO 
+.................... char * strerror(unsigned int8 errnum) 
+.................... { 
+.................... char s[15]; 
+.................... switch( errnum) 
+.................... { 
+.................... case 0: 
+....................    strcpy(s,"no errors"); 
+....................    return s; 
+.................... case EDOM : 
+....................    strcpy(s,"domain error"); 
+....................    return s; 
+.................... case ERANGE: 
+....................    strcpy(s,"range error"); 
+....................    return s; 
+.................... } 
+.................... } 
+.................... #ENDIF 
+.................... /* standard template: size_t strlen(const char *s). 
+....................    Computes length of s1 (preceding terminating 0) */ 
+....................  
+.................... unsigned int8 strlen(char *s) 
+.................... { 
+....................    char *sc; 
+....................  
+....................    for (sc = s; *sc != 0; sc++); 
+....................    return(sc - s); 
+.................... } 
+....................  
+.................... /* standard template: size_t stricmp(const char *s1, const char *s2). 
+....................    Compares s1 to s2 ignoring case (upper vs. lower) */ 
+....................  
+.................... signed int8 stricmp(char *s1, char *s2) 
+.................... { 
+....................  for(; *s1==*s2||(isalpha(*s1)&&isalpha(*s2)&&(*s1==*s2+32||*s2==*s1+32)); 
+....................     s1++, s2++) 
+....................     if (*s1 == '\0') 
+....................        return(0); 
+....................  return((*s1 < *s2) ? -1: 1); 
+.................... } 
+....................  
+....................  
+.................... /* standard template: char *strlwr(char *s). 
+....................    Replaces uppercase letters by lowercase; 
+....................    returns pointer to new string s */ 
+....................  
+.................... char *strlwr(char *s) 
+.................... { 
+....................    char *p; 
+....................  
+....................    for (p = s; *p != '\0'; p++) 
+....................       if (*p >= 'A' && *p <='Z') 
+....................          *p += 'a' - 'A'; 
+....................    return(s); 
+.................... } 
+....................  
+....................  
+.................... /************************************************************/ 
+....................  
+....................  
+.................... #endif 
+....................  
+....................  
+.................... #define UnderSet_addr 0x00 
+.................... #define OverSet_addr 0x01 
+.................... #define UnderResSet_addr 0x02 
+.................... #define OverResSet_addr 0x03 
+.................... #define UnderTimSet_addr 0x04 
+.................... #define OverTimSet_addr 0x05 
+.................... #define UnderResTimSet_addr 0x06 
+.................... #define OverResTimSet_addr 0x07 
+....................  
+.................... int1 FlashLEDUnder = false; 
+.................... int1 FlashLEDOver = false; 
+....................  
+.................... volatile unsigned int8 flash_LED_Under =0,flash_LED_Over =0; 
+....................  
+.................... volatile int8 toggle_pin_under =0; 
+.................... volatile int8 toggle_pin_over =0; 
+....................  
+.................... // Update 18/5/63 Right 
+.................... #define LED_Healty PIN_B5 
+.................... #define LED_Under PIN_B4 
+.................... #define LED_Over  PIN_B0 
+....................  
+.................... #define Over_Rly PIN_B7 
+.................... #define Under_Rly PIN_B6 
+....................  
+.................... #define HIGH  1 
+.................... #define LOW   0 
+....................  
+.................... //   for din rail 
+.................... #define BT_DW PIN_B13 
+.................... #define BT_UP PIN_B14 
+.................... #define BT_SET PIN_B15 
+....................  
+.................... //   for surface mount 
+.................... //#define BT_DW PIN_B14 
+.................... //#define BT_UP PIN_B15 
+.................... //#define BT_SET PIN_B13 
+....................  
+.................... #define EXP_OUT_DO      PIN_B12 
+.................... #define EXP_OUT_CLOCK   PIN_B11 
+.................... #define EXP_OUT_ENABLE  PIN_B10 
+....................  
+.................... #define EEPROM_SDA  PIN_B9 
+.................... #define EEPROM_SCL  PIN_B8 
+....................  
+.................... //#use i2c(Master,slow,sda=PIN_B9,scl=PIN_B8, stream=MCP342X_STREAM, FORCE_HW)// 
+.................... //#use i2c(Master, fast=450000,sda=PIN_B9,scl=PIN_B8, stream=MCP342X_STREAM, FORCE_SW) 
+.................... //#use i2c(Master,slow,sda=PIN_B9,scl=PIN_B8, stream=MCP342X_STREAM) 
+.................... //#use rs232(baud=9600,parity=N,xmit=PIN_B4,rcv=PIN_B5,bits=8) 
+.................... //#use i2c(Master,sda=PIN_B9,scl=PIN_B8, stream=MCP342X_STREAM,restart_wdt) 
+....................  
+.................... #define NORMAL_VOLT 24 
+.................... #define MAX_VOLT 35 
+.................... #define MIN_VOLT 15 
+.................... #define MAX_TIME 60 
+.................... #define MIN_TIME 0 
+....................  
+.................... volatile unsigned int16 DC_V; 
+.................... volatile int16 DC_V7seg; 
+.................... int16 DC_Average[12]; 
+.................... boolean set_mode = false; 
+.................... volatile unsigned int32 menuCount; 
+.................... volatile signed char flash_dot,flash_LED; 
+....................  
+.................... volatile unsigned int8 DebugLoopCount =0; 
+....................  
+.................... volatile unsigned int8 HangCount =0,oldloop =0,Updateloop =1; 
+....................  
+.................... volatile unsigned int8 ReadI2CCount =0,I2C_wait; 
+....................  
+.................... volatile int1 Ack1 =1,Ack2 =1,Ack3 =1; 
+....................  
+....................  
+.................... int16 real_data ; 
+....................  
+.................... float vout = 0.0; 
+.................... float vin = 0.0; 
+....................  
+.................... //float VbuffArray[22]; 
+....................  
+.................... //float R1 = 100000.0; // resistance of R1 (100K) 220 
+.................... //float R1 = 56000.0; // resistance of R1 (100K) -125 
+.................... float R1 = 10000.0; 
+.................... float R2 =    680.0; // resistance of R2 (100) - see text! 
+....................  
+.................... //#use i2c(Master,sda=I2C_SDA,scl=I2C_SCL) 
+....................  
+.................... unsigned char roi, sib, hnoi; 
+....................  
+.................... /* Segment byte maps for numbers 0 to 9 */ 
+.................... const unsigned char SEGMENT_MAP[] = {0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90}; 
+.................... /* Byte maps to select digit 1 to 4 */ 
+.................... const unsigned char SEGMENT_SELECT[] = {0xFE,0xFD,0xFB,0xF7}; 
+....................  
+.................... //const byte CHR[] ={0xAA, 0xA3,}; 
+.................... enum{State_nor,State_PreUnder,State_Under,State_PreUnderRes,State_UnderRes,State_PreOver,State_Over,State_PreOverRes,State_OverRes}; 
+....................  
+.................... // UNDER OVER 
+.................... enum{nor, UnderSet, OverSet,UnderResSet,OverResSet,UnderTimSet,OverTimSet,UnderResTimSet,OverResTimSet}; 
+.................... // UNDER Only 
+.................... enum{Nor_UnOly, UnderSet_UnOly, UnderResSet_UnOly, UnderTimSet_UnOly, UnderResTimSet_UnOly}; 
+....................  
+.................... volatile unsigned int8 mode = Nor_UnOly,State = State_nor; 
+.................... volatile signed int16 UnderResTimeCount=0 ,OverResTimeCount=0, UnderTimeCount=0, OverTimeCount =0; 
+.................... volatile signed int16  OverTimSetValue,UnderResTimSetValue, UnderTimSetValue, OverResTimSetValue; 
+.................... volatile unsigned int16 UnderValue, OverValue, UnderResValue, OverResValue; 
+.................... volatile signed int16 StartMeasureCount = 600; 
+....................  
+.................... volatile unsigned int8 TIMER_Flag =0; 
+....................  
+.................... #define MCP342X_CONTINUOUS 0x10 
+.................... #define MCP342X_ONE_SHOT   0x00 
+....................  
+.................... #define MCP342X_18BITS     0x0C 
+.................... #define MCP342X_16BITS     0x08 
+.................... #define MCP342X_14BITS     0x04 
+.................... #define MCP342X_12BITS     0x00 
+....................  
+.................... #define MCP342X_8X_GAIN    0x03 
+.................... #define MCP342X_4X_GAIN    0x02 
+.................... #define MCP342X_2X_GAIN    0x01 
+.................... #define MCP342X_1X_GAIN    0x00 
+....................  
+.................... #define MCP342X_DEVICE_CODE       0xD0 
+.................... #define MCP342X_START_CONVERSTION 0x80 
+....................  
+.................... #define MCP342X_GENERAL_CALL_ADDRESS   0x00 
+.................... #define MCP342X_GENERAL_CALL_LATCH     0x04 
+.................... /* 
+.................... #ifndef MCP342X_SCL 
+....................  #define MCP342X_SCL  PIN_B8 
+.................... #endif 
+....................  
+.................... #ifndef MCP342X_SDA 
+....................  #define MCP342X_SDA  PIN_B9 
+.................... #endif 
+.................... */ 
+.................... #define MCP342X_MODE MCP342X_CONTINUOUS 
+.................... #ifndef MCP342X_MODE 
+....................  #define MCP342X_MODE MCP342X_ONE_SHOT 
+.................... #endif 
+....................  
+.................... #define MCP342X_BITS MCP342X_16BITS 
+.................... #ifndef MCP342X_BITS 
+....................  #define MCP342X_BITS MCP342X_16BITS 
+.................... #endif 
+....................  
+.................... #define MCP342X_GAIN MCP342X_1X_GAIN 
+.................... #ifndef MCP342X_GAIN 
+....................  #define MCP342X_GAIN MCP342X_1X_GAIN 
+.................... #endif 
+....................  
+.................... #define MCP342X_ADDRESS 0 
+.................... #ifndef MCP342X_ADDRESS 
+....................  #define MCP342X_ADDRESS 0 
+.................... #endif 
+....................  
+.................... #define MCP342X_CHANNEL 0 
+.................... #ifndef MCP342X_CHANNEL 
+....................  #define MCP342X_CHANNEL 0 
+.................... #endif 
+....................  
+.................... /********************************************************** 
+....................  
+.................... Software I2C Library for PIC24 Devices. 
+....................  
+.................... **********************************************************/ 
+....................  
+.................... #define MCP342X_SCL  PIN_B8 
+.................... #define MCP342X_SDA  PIN_B9 
+....................  
+.................... void SoftI2CInit() 
+.................... { 
+....................    SET_TRIS_B( 0xE000 );// SDA SCL OUTPUT  
+*
+05CE:  MOV     #E000,W4
+05D0:  MOV     W4,2C8
+....................    output_high(MCP342X_SCL); 
+05D2:  BCLR.B  2C9.0
+05D4:  BSET.B  2CD.0
+....................    output_high(MCP342X_SDA);      
+05D6:  BCLR.B  2C9.1
+05D8:  BSET.B  2CD.1
+.................... } 
+05DA:  RETURN  
+....................  
+.................... void i2cNack(void) 
+.................... { 
+....................    output_high(MCP342X_SDA); 
+*
+088E:  BCLR.B  2C9.1
+0890:  BSET.B  2CD.1
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0892:  REPEAT  #3
+0894:  NOP     
+....................    output_high(MCP342X_SCL); 
+0896:  BCLR.B  2C9.0
+0898:  BSET.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+089A:  REPEAT  #3
+089C:  NOP     
+....................    output_low(MCP342X_SCL); 
+089E:  BCLR.B  2C9.0
+08A0:  BCLR.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+08A2:  REPEAT  #3
+08A4:  NOP     
+....................    output_high(MCP342X_SCL); 
+08A6:  BCLR.B  2C9.0
+08A8:  BSET.B  2CD.0
+.................... } 
+08AA:  RETURN  
+.................... void i2cAck(void) 
+.................... { 
+....................    output_low(MCP342X_SDA); 
+*
+0870:  BCLR.B  2C9.1
+0872:  BCLR.B  2CD.1
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0874:  REPEAT  #3
+0876:  NOP     
+....................    output_high(MCP342X_SCL); 
+0878:  BCLR.B  2C9.0
+087A:  BSET.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+087C:  REPEAT  #3
+087E:  NOP     
+....................    output_low(MCP342X_SCL); 
+0880:  BCLR.B  2C9.0
+0882:  BCLR.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0884:  REPEAT  #3
+0886:  NOP     
+....................    output_high(MCP342X_SCL); 
+0888:  BCLR.B  2C9.0
+088A:  BSET.B  2CD.0
+.................... } 
+088C:  RETURN  
+....................  
+.................... void SoftI2CStart() 
+.................... { 
+....................    output_high(MCP342X_SCL); 
+*
+05DC:  BCLR.B  2C9.0
+05DE:  BSET.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+05E0:  REPEAT  #3
+05E2:  NOP     
+....................     
+....................    output_low(MCP342X_SDA); 
+05E4:  BCLR.B  2C9.1
+05E6:  BCLR.B  2CD.1
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+05E8:  REPEAT  #3
+05EA:  NOP     
+....................     
+....................    //   Add by  jj 
+....................    output_low(MCP342X_SCL); 
+05EC:  BCLR.B  2C9.0
+05EE:  BCLR.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+05F0:  REPEAT  #3
+05F2:  NOP     
+.................... } 
+05F4:  RETURN  
+....................  
+.................... void SoftI2CStop() 
+.................... { 
+....................     output_low(MCP342X_SDA); 
+*
+0658:  BCLR.B  2C9.1
+065A:  BCLR.B  2CD.1
+....................     delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+065C:  REPEAT  #3
+065E:  NOP     
+....................     output_high(MCP342X_SCL); 
+0660:  BCLR.B  2C9.0
+0662:  BSET.B  2CD.0
+....................     delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0664:  REPEAT  #3
+0666:  NOP     
+....................     output_high(MCP342X_SDA); 
+0668:  BCLR.B  2C9.1
+066A:  BSET.B  2CD.1
+....................     delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+066C:  REPEAT  #3
+066E:  NOP     
+.................... } 
+0670:  RETURN  
+....................  
+.................... unsigned int8 SoftI2CWriteByte(unsigned int8 data) 
+.................... { 
+....................     unsigned int8 i; 
+....................         
+....................     for(i=0;i<8;i++) 
+*
+05F6:  CLR.B   875
+05F8:  MOV     874,W4
+05FA:  LSR     W4,#8,W4
+05FC:  CP.B    W4L,#8
+05FE:  BRA     C,628
+....................     { 
+....................       output_low(MCP342X_SCL); 
+0600:  BCLR.B  2C9.0
+0602:  BCLR.B  2CD.0
+....................       delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0604:  REPEAT  #3
+0606:  NOP     
+....................        
+....................       if(data & 0x80) 
+0608:  BTSS.B  874.7
+060A:  BRA     612
+....................          output_high(MCP342X_SDA); 
+060C:  BCLR.B  2C9.1
+060E:  BSET.B  2CD.1
+....................       else 
+0610:  BRA     616
+....................          output_low(MCP342X_SDA); 
+0612:  BCLR.B  2C9.1
+0614:  BCLR.B  2CD.1
+....................       delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0616:  REPEAT  #3
+0618:  NOP     
+....................        
+....................       output_high(MCP342X_SCL); 
+061A:  BCLR.B  2C9.0
+061C:  BSET.B  2CD.0
+....................       delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+061E:  REPEAT  #3
+0620:  NOP     
+....................        
+....................       data=data<<1; 
+0622:  SL.B    874
+....................    } 
+0624:  INC.B   0875
+0626:  BRA     5F8
+....................     
+....................    //The 9th clock (ACK Phase) 
+....................    output_low(MCP342X_SCL); 
+0628:  BCLR.B  2C9.0
+062A:  BCLR.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+062C:  REPEAT  #3
+062E:  NOP     
+....................  
+....................    //Stay hight wait for slave clear(low) signal to ack. 
+....................    //output_high(MCP342X_SDA); 
+....................    output_float (MCP342X_SDA);//SDA Input 
+0630:  BSET.B  2C9.1
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0632:  REPEAT  #3
+0634:  NOP     
+....................        
+....................    output_high(MCP342X_SCL); 
+0636:  BCLR.B  2C9.0
+0638:  BSET.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+063A:  REPEAT  #3
+063C:  NOP     
+....................     
+....................    //#**** Read Ack bit from Slave ****#// 
+....................    //SET_TRIS_B( 0xE200 ); //SDA Input 
+....................    unsigned int8 ack = input(MCP342X_SDA); 
+063E:  BSET.B  2C9.1
+....................    SET_TRIS_B( 0xE000 ); //SDA Output 
+*
+0646:  MOV     #E000,W4
+0648:  MOV     W4,2C8
+....................     
+....................    output_low(MCP342X_SCL); 
+064A:  BCLR.B  2C9.0
+064C:  BCLR.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+064E:  REPEAT  #3
+0650:  NOP     
+....................     
+....................    return ack;   
+0652:  MOV.B   876,W0L
+0654:  MOV.B   W0L,0
+.................... } 
+0656:  RETURN  
+....................  
+.................... unsigned char i2cReadByte(void) 
+.................... { 
+*
+0826:  MOV     W5,[W15++]
+....................    unsigned char inByte, n; 
+....................    SET_TRIS_B( 0xE200 ); // SET SDA Input 
+0828:  MOV     #E200,W4
+082A:  MOV     W4,2C8
+....................     
+....................    // Add By jj 
+....................    output_low(MCP342X_SCL); 
+082C:  BCLR.B  2C9.0
+082E:  BCLR.B  2CD.0
+....................    delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0830:  REPEAT  #3
+0832:  NOP     
+....................       
+....................    for (n=0; n<8; n++) 
+0834:  CLR.B   875
+0836:  MOV     874,W4
+0838:  LSR     W4,#8,W4
+083A:  CP.B    W4L,#8
+083C:  BRA     C,864
+....................    { 
+....................      output_high(MCP342X_SCL); 
+083E:  BCLR.B  2C9.0
+0840:  BSET.B  2CD.0
+....................      delay_cycles( 5 ); // 1 microsec @ 32 Mhz 
+0842:  REPEAT  #3
+0844:  NOP     
+....................       
+....................      if(input(MCP342X_SDA)) 
+0846:  BSET.B  2C9.1
+0848:  BTSS.B  2CB.1
+084A:  BRA     856
+....................       inByte = (inByte << 1) | 0x01; // msbit first 
+084C:  MOV.B   874,W0L
+084E:  SL      W0,#1,W0
+0850:  IOR.B    W0L,  #1,W0L
+0852:  MOV.B   W0L,874
+....................      else 
+0854:  BRA     858
+....................       inByte = inByte << 1; 
+0856:  SL.B    874
+....................       
+....................      output_low(MCP342X_SCL); 
+0858:  BCLR.B  2C9.0
+085A:  BCLR.B  2CD.0
+....................      delay_cycles( 5 ); // 1 microsec @ 32 Mhz   
+085C:  REPEAT  #3
+085E:  NOP     
+....................    } 
+0860:  INC.B   0875
+0862:  BRA     836
+....................    SET_TRIS_B( 0xE000 ); // SET SDA Output 
+0864:  MOV     #E000,W4
+0866:  MOV     W4,2C8
+....................    return(inByte); 
+0868:  MOV.B   874,W0L
+086A:  MOV.B   W0L,0
+.................... } 
+086C:  MOV     [--W15],W5
+086E:  RETURN  
+....................  
+.................... // MCP3425 Initial 
+.................... void Soft_adc_init() 
+.................... { 
+....................   SoftI2CInit(); 
+*
+0672:  CALL    5CE
+....................    
+....................   SoftI2CStart(); 
+0676:  CALL    5DC
+....................   Ack1 = SoftI2CWriteByte(MCP342X_DEVICE_CODE | (MCP342X_ADDRESS << 1));  //send write command 
+067A:  MOV.B   #D0,W0L
+067C:  MOV.B   W0L,874
+067E:  CALL    5F6
+0682:  BCLR.B  802.3
+0684:  BTSC.B  0.0
+0686:  BSET.B  802.3
+....................   Ack2 = SoftI2CWriteByte (MCP342X_MODE | MCP342X_BITS | MCP342X_GAIN | (MCP342X_CHANNEL << 5));  //send device configuration 
+0688:  MOV.B   #18,W0L
+068A:  MOV.B   W0L,874
+068C:  CALL    5F6
+0690:  BCLR.B  802.4
+0692:  BTSC.B  0.0
+0694:  BSET.B  802.4
+....................   SoftI2CStop(); 
+0696:  CALL    658
+.................... } 
+069A:  RETURN  
+....................  
+.................... // MCP3425 Read ADC 16 bit  Total 104 uSec. time Operate 
+.................... signed int16 Soft_read_adc_mcp(void) 
+.................... { 
+*
+08AC:  MOV.B   #80,W0L
+08AE:  MOV.B   W0L,872
+....................   union 
+....................   { 
+....................     signed int16 sint16; 
+....................     unsigned int8 b[2]; 
+....................   } result; 
+....................   unsigned int8 status = 0x80; 
+....................    
+....................   SoftI2CStart(); 
+08B0:  CALL    5DC
+....................   Ack1 = SoftI2CWriteByte(MCP342X_DEVICE_CODE | (MCP342X_ADDRESS << 1) | 1);  //send read command 
+08B4:  MOV.B   #D1,W0L
+08B6:  MOV.B   W0L,874
+08B8:  CALL    5F6
+08BC:  BCLR.B  802.3
+08BE:  BTSC.B  0.0
+08C0:  BSET.B  802.3
+....................   result.b[1] = i2cReadByte(); 
+08C2:  CALL    826
+08C6:  MOV.B   W0L,871
+....................   i2cAck(); 
+08C8:  CALL    870
+....................   result.b[0] = i2cReadByte(); 
+08CC:  CALL    826
+08D0:  MOV.B   W0L,870
+....................   i2cAck(); 
+08D2:  CALL    870
+....................   status = i2cReadByte(); 
+08D6:  CALL    826
+08DA:  MOV.B   W0L,872
+....................   i2cNack(); 
+08DC:  CALL    88E
+....................   SoftI2CStop(); 
+08E0:  CALL    658
+....................    
+....................   return(result.sint16); 
+08E4:  PUSH    870
+08E6:  POP     0
+.................... } 
+08E8:  RETURN  
+....................  
+.................... // END Software I2C Library 
+....................  
+.................... /*============EEPROM==========================*/ 
+....................  
+.................... #use i2c(Master,Slow,sda=PIN_A0,scl=PIN_A1,restart_wdt,force_hw) 
+*
+069C:  MOV     #8,W2
+069E:  CLRWDT  
+06A0:  REPEAT  #0
+06A2:  NOP     
+06A4:  BCLR.B  2C4.1
+06A6:  BCLR.B  2C0.1
+06A8:  CLRWDT  
+06AA:  REPEAT  #1
+06AC:  NOP     
+06AE:  RLC.B   W1L,W1L
+06B0:  BCLR.B  2C4.0
+06B2:  BTSC.B  42.0
+06B4:  BSET.B  2C0.0
+06B6:  BTSS.B  42.0
+06B8:  BCLR.B  2C0.0
+06BA:  BSET.B  2C0.1
+06BC:  BTSS.B  2C2.1
+06BE:  BRA     6BC
+06C0:  DEC     W2,W2
+06C2:  BRA     NZ,69E
+06C4:  CLRWDT  
+06C6:  REPEAT  #0
+06C8:  NOP     
+06CA:  BCLR.B  2C4.1
+06CC:  BCLR.B  2C0.1
+06CE:  NOP     
+06D0:  BSET.B  2C0.0
+06D2:  CLRWDT  
+06D4:  REPEAT  #1
+06D6:  NOP     
+06D8:  CLRWDT  
+06DA:  REPEAT  #1
+06DC:  NOP     
+06DE:  BSET.B  2C0.1
+06E0:  BTSS.B  2C2.1
+06E2:  BRA     6E0
+06E4:  CLRWDT  
+06E6:  REPEAT  #1
+06E8:  NOP     
+06EA:  MOV     #0,W0
+06EC:  BTSC.B  2C2.0
+06EE:  BSET    W0.0
+06F0:  BCLR.B  2C4.1
+06F2:  BCLR.B  2C0.1
+06F4:  BCLR.B  2C4.0
+06F6:  BCLR.B  2C0.0
+06F8:  RETURN  
+*
+0748:  MOV     #8,W3
+074A:  BSET.B  2C0.0
+074C:  CLRWDT  
+074E:  REPEAT  #1
+0750:  NOP     
+0752:  BSET.B  2C0.1
+0754:  BTSS.B  2C2.1
+0756:  BRA     754
+0758:  BTSC.B  2C2.0
+075A:  BSET.B  42.0
+075C:  BTSS.B  2C2.0
+075E:  BCLR.B  42.0
+0760:  RLC     W2,W2
+0762:  CLRWDT  
+0764:  REPEAT  #0
+0766:  NOP     
+0768:  BCLR.B  2C0.1
+076A:  BCLR.B  2C4.1
+076C:  DEC     W3,W3
+076E:  BRA     NZ,74A
+0770:  BSET.B  2C0.0
+0772:  CLRWDT  
+0774:  REPEAT  #1
+0776:  NOP     
+0778:  BCLR.B  2C4.0
+077A:  CP0     W1
+077C:  BTSS.B  42.1
+077E:  BCLR.B  2C0.0
+0780:  NOP     
+0782:  BSET.B  2C0.1
+0784:  BTSS.B  2C2.1
+0786:  BRA     784
+0788:  CLRWDT  
+078A:  REPEAT  #0
+078C:  NOP     
+078E:  BCLR.B  2C4.1
+0790:  BCLR.B  2C0.1
+0792:  CLRWDT  
+0794:  REPEAT  #1
+0796:  NOP     
+0798:  BCLR.B  2C4.0
+079A:  BCLR.B  2C0.0
+079C:  MOV     W2,W0
+079E:  RETURN  
+....................  
+.................... //#define EEPROM_SDA  PIN_A0 
+.................... //#define EEPROM_SCL  PIN_A1 
+.................... #define EEPROM_ADDRESS BYTE 
+.................... #define EEPROM_SIZE    128 
+....................  
+.................... void init_ext_eeprom() { 
+....................    output_float(EEPROM_SCL); 
+....................    output_float(EEPROM_SDA); 
+.................... } 
+....................  
+.................... BOOLEAN ext_eeprom_ready() { 
+....................    int1 ack; 
+....................    i2c_start();            // If the write command is acknowledged, 
+*
+06FA:  BSET.B  2C0.0
+06FC:  CLRWDT  
+06FE:  REPEAT  #0
+0700:  NOP     
+0702:  BSET.B  2C0.1
+0704:  CLRWDT  
+0706:  REPEAT  #1
+0708:  NOP     
+070A:  BCLR.B  2C4.0
+070C:  BCLR.B  2C0.0
+070E:  CLRWDT  
+0710:  REPEAT  #0
+0712:  NOP     
+0714:  BCLR.B  2C4.1
+0716:  BCLR.B  2C0.1
+....................    ack = i2c_write(0xa0);  // then the device is ready. 
+0718:  MOV.B   #A0,W1L
+071A:  CALL    69C
+071E:  BCLR.B  874.0
+0720:  BTSC.B  0.0
+0722:  BSET.B  874.0
+....................    i2c_stop(); 
+0724:  BCLR.B  2C0.0
+0726:  NOP     
+0728:  BSET.B  2C0.1
+072A:  BTSS.B  2C2.1
+072C:  BRA     72A
+072E:  CLRWDT  
+0730:  REPEAT  #0
+0732:  NOP     
+0734:  REPEAT  #1
+0736:  NOP     
+0738:  BSET.B  2C0.0
+073A:  CLRWDT  
+073C:  REPEAT  #0
+073E:  NOP     
+....................    return !ack; 
+0740:  CLR.B   W0
+0742:  BTSS.B  874.0
+0744:  INC     W0,W0
+.................... } 
+0746:  RETURN  
+....................  
+.................... void write_ext_eeprom(BYTE address, BYTE data) { 
+....................    while(!ext_eeprom_ready()); 
+*
+0E3E:  CALL    6FA
+0E42:  CP0.B   W0L
+0E44:  BRA     Z,E3E
+....................    i2c_start(); 
+0E46:  BSET.B  2C0.0
+0E48:  CLRWDT  
+0E4A:  REPEAT  #0
+0E4C:  NOP     
+0E4E:  BSET.B  2C0.1
+0E50:  CLRWDT  
+0E52:  REPEAT  #1
+0E54:  NOP     
+0E56:  BCLR.B  2C4.0
+0E58:  BCLR.B  2C0.0
+0E5A:  CLRWDT  
+0E5C:  REPEAT  #0
+0E5E:  NOP     
+0E60:  BCLR.B  2C4.1
+0E62:  BCLR.B  2C0.1
+....................    i2c_write(0xa0); 
+0E64:  MOV.B   #A0,W1L
+0E66:  CALL    69C
+....................    i2c_write(address); 
+0E6A:  MOV     870,W1
+0E6C:  CALL    69C
+....................    i2c_write(data); 
+0E70:  MOV.B   871,W0L
+0E72:  MOV     W0,W1
+0E74:  CALL    69C
+....................    i2c_stop(); 
+0E78:  BCLR.B  2C0.0
+0E7A:  NOP     
+0E7C:  BSET.B  2C0.1
+0E7E:  BTSS.B  2C2.1
+0E80:  BRA     E7E
+0E82:  CLRWDT  
+0E84:  REPEAT  #0
+0E86:  NOP     
+0E88:  REPEAT  #1
+0E8A:  NOP     
+0E8C:  BSET.B  2C0.0
+0E8E:  CLRWDT  
+0E90:  REPEAT  #0
+0E92:  NOP     
+.................... } 
+0E94:  RETURN  
+....................  
+.................... BYTE read_ext_eeprom(BYTE address) { 
+....................    BYTE data; 
+....................  
+....................    while(!ext_eeprom_ready()); 
+*
+07A0:  CALL    6FA
+07A4:  CP0.B   W0L
+07A6:  BRA     Z,7A0
+....................    i2c_start(); 
+07A8:  BSET.B  2C0.0
+07AA:  CLRWDT  
+07AC:  REPEAT  #0
+07AE:  NOP     
+07B0:  BSET.B  2C0.1
+07B2:  CLRWDT  
+07B4:  REPEAT  #1
+07B6:  NOP     
+07B8:  BCLR.B  2C4.0
+07BA:  BCLR.B  2C0.0
+07BC:  CLRWDT  
+07BE:  REPEAT  #0
+07C0:  NOP     
+07C2:  BCLR.B  2C4.1
+07C4:  BCLR.B  2C0.1
+....................    i2c_write(0xa0); 
+07C6:  MOV.B   #A0,W1L
+07C8:  CALL    69C
+....................    i2c_write(address); 
+07CC:  MOV     86E,W1
+07CE:  CALL    69C
+....................    i2c_start(); 
+07D2:  BSET.B  2C0.0
+07D4:  CLRWDT  
+07D6:  REPEAT  #0
+07D8:  NOP     
+07DA:  BSET.B  2C0.1
+07DC:  CLRWDT  
+07DE:  REPEAT  #1
+07E0:  NOP     
+07E2:  BTSS.B  2C2.1
+07E4:  BRA     7E2
+07E6:  BCLR.B  2C4.0
+07E8:  BCLR.B  2C0.0
+07EA:  CLRWDT  
+07EC:  REPEAT  #0
+07EE:  NOP     
+07F0:  BCLR.B  2C4.1
+07F2:  BCLR.B  2C0.1
+....................    i2c_write(0xa1); 
+07F4:  MOV.B   #A1,W1L
+07F6:  CALL    69C
+....................    data=i2c_read(0); 
+07FA:  MOV     #0,W1
+07FC:  MOV     W1,[W15++]
+07FE:  MOV     [--W15],W1
+0800:  CALL    748
+0804:  MOV.B   W0L,86F
+....................    i2c_stop(); 
+0806:  BCLR.B  2C0.0
+0808:  NOP     
+080A:  BSET.B  2C0.1
+080C:  BTSS.B  2C2.1
+080E:  BRA     80C
+0810:  CLRWDT  
+0812:  REPEAT  #0
+0814:  NOP     
+0816:  REPEAT  #1
+0818:  NOP     
+081A:  BSET.B  2C0.0
+081C:  CLRWDT  
+081E:  REPEAT  #0
+0820:  NOP     
+....................    return(data); 
+0822:  MOV.B   86F,W0L
+.................... } 
+0824:  RETURN  
+.................... //////////////////////////////////////////////////// 
+.................... void delay_nanosec(int16 us) { //about 800 nanosec 
+....................    volatile int16 counter = us; 
+....................    while(counter--); 
+.................... } 
+.................... /********************************6B595 Driver*********************************/ 
+.................... void SegmentDisplay() 
+.................... { 
+*
+030A:  CLR.B   88C
+....................    Signed int8 j=0,data_out,data_U2,data_U1; 
+....................    static int8 cnt=0 ; 
+....................    
+....................     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+....................     static int V_to_Seg;  
+*
+1492:  CLR     862
+....................    if(mode == nor)   
+*
+030C:  CP0.B   844
+030E:  BRA     NZ,316
+....................   { 
+....................      V_to_Seg = DC_V7seg; 
+0310:  PUSH    80A
+0312:  POP     862
+....................   } 
+....................   else if(mode == UnderSet) 
+0314:  BRA     374
+0316:  MOV     844,W4
+0318:  CP.B    W4L,#1
+031A:  BRA     NZ,322
+....................   { 
+....................      V_to_Seg = UnderValue; 
+031C:  PUSH    856
+031E:  POP     862
+....................   } 
+....................    else if(mode == OverSet) 
+0320:  BRA     374
+0322:  MOV     844,W4
+0324:  CP.B    W4L,#2
+0326:  BRA     NZ,32E
+....................    { 
+....................      V_to_Seg = OverValue; 
+0328:  PUSH    858
+032A:  POP     862
+....................    } 
+....................    else if(mode == UnderResSet) 
+032C:  BRA     374
+032E:  MOV     844,W4
+0330:  CP.B    W4L,#3
+0332:  BRA     NZ,33A
+....................    { 
+....................      V_to_Seg = UnderResValue; 
+0334:  PUSH    85A
+0336:  POP     862
+....................    } 
+....................    else if(mode == OverResSet) 
+0338:  BRA     374
+033A:  MOV     844,W4
+033C:  CP.B    W4L,#4
+033E:  BRA     NZ,346
+....................    { 
+....................      V_to_Seg = OverResValue; 
+0340:  PUSH    85C
+0342:  POP     862
+....................    } 
+....................    else if(mode == UnderTimSet) 
+0344:  BRA     374
+0346:  MOV     844,W4
+0348:  CP.B    W4L,#5
+034A:  BRA     NZ,352
+....................    { 
+....................      V_to_Seg = UnderTimSetValue; 
+034C:  PUSH    852
+034E:  POP     862
+....................    } 
+....................    else if(mode == OverTimSet) 
+0350:  BRA     374
+0352:  MOV     844,W4
+0354:  CP.B    W4L,#6
+0356:  BRA     NZ,35E
+....................    { 
+....................      V_to_Seg = OverTimSetValue; 
+0358:  PUSH    84E
+035A:  POP     862
+....................    } 
+....................    else if(mode == UnderResTimSet) 
+035C:  BRA     374
+035E:  MOV     844,W4
+0360:  CP.B    W4L,#7
+0362:  BRA     NZ,36A
+....................    { 
+....................      V_to_Seg = UnderResTimSetValue; 
+0364:  PUSH    850
+0366:  POP     862
+....................    } 
+....................    else if(mode == OverResTimSet) 
+0368:  BRA     374
+036A:  MOV     844,W4
+036C:  CP.B    W4L,#8
+036E:  BRA     NZ,374
+....................    { 
+....................      V_to_Seg = OverResTimSetValue; 
+0370:  PUSH    854
+0372:  POP     862
+....................    } 
+....................    
+....................   //  ========== Hold Display Show ================  
+....................   static int16 Count_Display = 7; //7*62 = 434ms 
+....................   if(--Count_Display <= 0) 
+0374:  DEC     0864
+0376:  MOV     864,W4
+0378:  CP      W4,#0
+037A:  BRA     GT,3AE
+....................   { 
+....................      Count_Display = 7; 
+037C:  MOV     #7,W4
+037E:  MOV     W4,864
+....................       
+....................      roi = V_to_Seg/100; 
+0380:  MOV     862,W4
+0382:  MOV     #64,W3
+0384:  REPEAT  #11
+0386:  DIV.S   W4,W3
+0388:  MOV.B   W0L,82F
+....................    
+....................      sib = V_to_Seg%100; 
+038A:  MOV     862,W4
+038C:  MOV     #64,W3
+038E:  REPEAT  #11
+0390:  DIV.S   W4,W3
+0392:  MOV     W1,W0
+0394:  MOV.B   W0L,842
+....................      sib = sib/10; 
+0396:  MOV     842,W4
+0398:  CLR.B   9
+039A:  MOV     #A,W3
+039C:  REPEAT  #11
+039E:  DIV.U   W4,W3
+03A0:  MOV.B   W0L,842
+....................      
+....................      hnoi = V_to_Seg%10; 
+03A2:  MOV     862,W4
+03A4:  MOV     #A,W3
+03A6:  REPEAT  #11
+03A8:  DIV.S   W4,W3
+03AA:  MOV     W1,W0
+03AC:  MOV.B   W0L,843
+....................   } 
+....................     
+....................    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+....................       
+....................    //restart_wdt(); 
+....................    if(++cnt > 2)cnt = 0; 
+03AE:  INC.B   0861
+03B0:  MOV     860,W4
+03B2:  LSR     W4,#8,W4
+03B4:  CP.B    W4L,#2
+03B6:  BRA     LE,3BA
+03B8:  CLR.B   861
+....................    switch(cnt) 
+....................    {       
+03BA:  MOV.B   861,W0L
+03BC:  CLR.B   1
+03BE:  XOR     #0,W0
+03C0:  BRA     Z,3CC
+03C2:  XOR     #1,W0
+03C4:  BRA     Z,3D6
+03C6:  XOR     #3,W0
+03C8:  BRA     Z,3E0
+03CA:  BRA     3EA
+....................      case 0: // --1  
+....................       data_U2 = hnoi; 
+03CC:  MOV.B   843,W0L
+03CE:  MOV.B   W0L,88E
+....................       data_U1 = cnt; 
+03D0:  MOV.B   861,W0L
+03D2:  MOV.B   W0L,88F
+....................      break; 
+03D4:  BRA     3EA
+....................  
+....................      case 1: //--2 
+....................        data_U2 = sib; 
+03D6:  MOV.B   842,W0L
+03D8:  MOV.B   W0L,88E
+....................        data_U1 = cnt; 
+03DA:  MOV.B   861,W0L
+03DC:  MOV.B   W0L,88F
+....................  
+....................      break; 
+03DE:  BRA     3EA
+....................        
+....................      case 2: // --3 
+....................        data_U2 = roi; 
+03E0:  MOV.B   82F,W0L
+03E2:  MOV.B   W0L,88E
+....................        data_U1 = cnt; 
+03E4:  MOV.B   861,W0L
+03E6:  MOV.B   W0L,88F
+....................  
+....................      break;   
+03E8:  BRA     3EA
+....................    } 
+....................       
+....................    data_out = SEGMENT_MAP[data_U2]; 
+03EA:  MOV.B   88E,W0L
+03EC:  SE      W0,W0
+03EE:  CALL    200
+03F2:  MOV.B   W0L,88D
+....................    if((set_mode)&&(cnt == 0)) 
+03F4:  BTSS.B  802.2
+03F6:  BRA     408
+03F8:  CP0.B   861
+03FA:  BRA     NZ,408
+....................    { 
+....................      if(flash_dot>20) 
+03FC:  MOV     806,W4
+03FE:  LSR     W4,#8,W4
+0400:  CP.B    W4L,#14
+0402:  BRA     LEU,408
+....................      { 
+....................         
+....................        data_out &=~ 0b10000000; 
+0404:  BCLR.B  88D.7
+....................      } 
+....................      else 
+0406:  BRA     408
+....................      { 
+....................        data_out = data_out; 
+....................      } 
+....................    } 
+....................     
+....................    if((cnt ==1)&&(mode == nor))//dot for 24 48 V 
+0408:  MOV     860,W4
+040A:  LSR     W4,#8,W4
+040C:  CP.B    W4L,#1
+040E:  BRA     NZ,416
+0410:  CP0.B   844
+0412:  BRA     NZ,416
+....................    { 
+....................      data_out  &=(~0x80); 
+0414:  BCLR.B  88D.7
+....................    } 
+....................     
+....................    for(j=7;j>=0;j--) 
+0416:  MOV.B   #7,W0L
+0418:  MOV.B   W0L,88C
+041A:  MOV     88C,W4
+041C:  CP.B    W4L,#0
+041E:  BRA     LT,442
+....................    { 
+....................       output_bit(EXP_OUT_DO,bit_test(data_out,j)); 
+0420:  MOV.B   88D,W0L
+0422:  MOV     W0,W1
+0424:  MOV.B   88C,W0L
+0426:  BTST.C  W1.W0
+0428:  BRA     C,42E
+042A:  BCLR.B  2CD.4
+042C:  BRA     430
+042E:  BSET.B  2CD.4
+0430:  BCLR.B  2C9.4
+....................       output_high(EXP_OUT_CLOCK); 
+0432:  BCLR.B  2C9.3
+0434:  BSET.B  2CD.3
+....................       delay_us(1); 
+0436:  REPEAT  #2
+0438:  NOP     
+....................       output_low(EXP_OUT_CLOCK); 
+043A:  BCLR.B  2C9.3
+043C:  BCLR.B  2CD.3
+....................    } 
+043E:  DEC.B   088C
+0440:  BRA     41A
+....................     
+....................    /*=========================================*/ 
+....................    data_out = SEGMENT_SELECT[data_U1]; 
+0442:  MOV.B   88F,W0L
+0444:  SE      W0,W0
+0446:  CALL    216
+044A:  MOV.B   W0L,88D
+....................     
+....................    //$$$$$$$$$$$$$$$jj 
+....................    // if VDC < 100 not show lak roi 
+....................    if((cnt ==2)&&(roi == 0)) 
+044C:  MOV     860,W4
+044E:  LSR     W4,#8,W4
+0450:  CP.B    W4L,#2
+0452:  BRA     NZ,45C
+0454:  CP0.B   82F
+0456:  BRA     NZ,45C
+....................    { 
+....................       data_out |=0b00000100; 
+0458:  BSET.B  88D.2
+....................    } 
+....................    else if(cnt ==1) 
+045A:  BRA     46E
+045C:  MOV     860,W4
+045E:  LSR     W4,#8,W4
+0460:  CP.B    W4L,#1
+0462:  BRA     NZ,46E
+....................    { 
+....................      if((sib == 0)&&(roi==0)) 
+0464:  CP0.B   842
+0466:  BRA     NZ,46E
+0468:  CP0.B   82F
+046A:  BRA     NZ,46E
+....................      { 
+....................        data_out |=0b00000010; 
+046C:  BSET.B  88D.1
+....................      }   
+....................    } 
+....................     
+....................    //$$$$$$$$$$$$$$$jj 
+....................     
+....................    if(mode == nor)   
+046E:  CP0.B   844
+0470:  BRA     NZ,47E
+....................    { 
+....................       data_out = data_out |= 0b11110000;  
+0472:  MOV     88C,W4
+0474:  LSR     W4,#8,W4
+0476:  IOR.B   #F0,W4L
+0478:  MOV.B   W4L,W0L
+047A:  MOV.B   W0L,88D
+....................    } 
+....................    else if(mode == UnderSet) 
+047C:  BRA     538
+047E:  MOV     844,W4
+0480:  CP.B    W4L,#1
+0482:  BRA     NZ,492
+....................    { 
+....................       //data_out = data_out &= ~0x80; 
+....................      data_out = data_out &= ~0x10;//80 
+0484:  BCLR.B  88D.4
+....................      data_out = data_out |= 0b11100000;//clear LED Error 
+0486:  MOV     88C,W4
+0488:  LSR     W4,#8,W4
+048A:  IOR.B   #E0,W4L
+048C:  MOV.B   W4L,W0L
+048E:  MOV.B   W0L,88D
+....................    } 
+....................    else if(mode == OverSet) 
+0490:  BRA     538
+0492:  MOV     844,W4
+0494:  CP.B    W4L,#2
+0496:  BRA     NZ,4A6
+....................    { 
+....................       //data_out = data_out &= ~0x40; 
+....................       data_out = data_out &= ~0x20;//40 
+0498:  BCLR.B  88D.5
+....................       data_out = data_out |= 0b11010000;//clear LED Error 
+049A:  MOV     88C,W4
+049C:  LSR     W4,#8,W4
+049E:  IOR.B   #D0,W4L
+04A0:  MOV.B   W4L,W0L
+04A2:  MOV.B   W0L,88D
+....................    } 
+....................    else if(mode == UnderResSet) 
+04A4:  BRA     538
+04A6:  MOV     844,W4
+04A8:  CP.B    W4L,#3
+04AA:  BRA     NZ,4C2
+....................    { 
+....................       //data_out = data_out &= ~0b10100000; 
+....................       data_out = data_out &= ~0b01010000; 
+04AC:  MOV     88C,W4
+04AE:  LSR     W4,#8,W4
+04B0:  AND.B   #AF,W4L
+04B2:  MOV.B   W4L,W0L
+04B4:  MOV.B   W0L,88D
+....................       data_out = data_out |=  0b10100000;//clear LED Error 
+04B6:  MOV     88C,W4
+04B8:  LSR     W4,#8,W4
+04BA:  IOR.B   #A0,W4L
+04BC:  MOV.B   W4L,W0L
+04BE:  MOV.B   W0L,88D
+....................    } 
+....................    else if(mode == OverResSet) 
+04C0:  BRA     538
+04C2:  MOV     844,W4
+04C4:  CP.B    W4L,#4
+04C6:  BRA     NZ,4DE
+....................    { 
+....................       //data_out = data_out &= ~0b01100000; 
+....................       data_out = data_out &= ~0b01100000; 
+04C8:  MOV     88C,W4
+04CA:  LSR     W4,#8,W4
+04CC:  AND.B   #9F,W4L
+04CE:  MOV.B   W4L,W0L
+04D0:  MOV.B   W0L,88D
+....................       data_out = data_out |=  0b10010000;//clear LED Error 
+04D2:  MOV     88C,W4
+04D4:  LSR     W4,#8,W4
+04D6:  IOR.B   #90,W4L
+04D8:  MOV.B   W4L,W0L
+04DA:  MOV.B   W0L,88D
+....................    } 
+....................    else if(mode == UnderTimSet) 
+04DC:  BRA     538
+04DE:  MOV     844,W4
+04E0:  CP.B    W4L,#5
+04E2:  BRA     NZ,4FA
+....................    { 
+....................       //data_out = data_out &= ~0b10010000; 
+....................       data_out = data_out &= ~0b10010000; 
+04E4:  MOV     88C,W4
+04E6:  LSR     W4,#8,W4
+04E8:  AND.B   #6F,W4L
+04EA:  MOV.B   W4L,W0L
+04EC:  MOV.B   W0L,88D
+....................       //data_out = data_out |=  0b00100000;//clear LED Error 
+....................       data_out = data_out |=  0b01100000;//clear LED Error 
+04EE:  MOV     88C,W4
+04F0:  LSR     W4,#8,W4
+04F2:  IOR.B   #60,W4L
+04F4:  MOV.B   W4L,W0L
+04F6:  MOV.B   W0L,88D
+....................    } 
+....................    else if(mode == OverTimSet) 
+04F8:  BRA     538
+04FA:  MOV     844,W4
+04FC:  CP.B    W4L,#6
+04FE:  BRA     NZ,516
+....................    { 
+....................       //data_out = data_out &= ~0b01010000; 
+....................       data_out = data_out &= ~0b10100000; 
+0500:  MOV     88C,W4
+0502:  LSR     W4,#8,W4
+0504:  AND.B   #5F,W4L
+0506:  MOV.B   W4L,W0L
+0508:  MOV.B   W0L,88D
+....................       //data_out = data_out |=  0b00010000;//clear LED Error 
+....................       data_out = data_out |=  0b01010000;//clear LED Error 
+050A:  MOV     88C,W4
+050C:  LSR     W4,#8,W4
+050E:  IOR.B   #50,W4L
+0510:  MOV.B   W4L,W0L
+0512:  MOV.B   W0L,88D
+....................    } 
+....................    else if(mode == UnderResTimSet) 
+0514:  BRA     538
+0516:  MOV     844,W4
+0518:  CP.B    W4L,#7
+051A:  BRA     NZ,52A
+....................    { 
+....................       //data_out = data_out &= ~0b10110000;//00000000 
+....................       data_out = data_out &= ~0b11010000;//00000000 
+051C:  MOV     88C,W4
+051E:  LSR     W4,#8,W4
+0520:  AND.B   #2F,W4L
+0522:  MOV.B   W4L,W0L
+0524:  MOV.B   W0L,88D
+....................       data_out = data_out |=  0b00100000;//clear LED Error 
+0526:  BSET.B  88D.5
+....................    } 
+....................    else if(mode == OverResTimSet) 
+0528:  BRA     538
+052A:  MOV     844,W4
+052C:  CP.B    W4L,#8
+052E:  BRA     NZ,538
+....................    { 
+....................       //data_out = data_out &= ~0b01110000;//00000000 
+....................       data_out = data_out &= ~0b11100000;//00000000 
+0530:  MOV.B   88D,W0L
+0532:  AND.B   W0L,#1F,W0L
+0534:  MOV.B   W0L,88D
+....................       data_out = data_out |=  0b00010000;//clear LED Error 
+0536:  BSET.B  88D.4
+....................    } 
+....................    for(j=7;j>=0;j--) 
+0538:  MOV.B   #7,W0L
+053A:  MOV.B   W0L,88C
+053C:  MOV     88C,W4
+053E:  CP.B    W4L,#0
+0540:  BRA     LT,564
+....................    {       
+....................       output_bit(EXP_OUT_DO,bit_test(data_out,j)); 
+0542:  MOV.B   88D,W0L
+0544:  MOV     W0,W1
+0546:  MOV.B   88C,W0L
+0548:  BTST.C  W1.W0
+054A:  BRA     C,550
+054C:  BCLR.B  2CD.4
+054E:  BRA     552
+0550:  BSET.B  2CD.4
+0552:  BCLR.B  2C9.4
+....................       output_high(EXP_OUT_CLOCK); 
+0554:  BCLR.B  2C9.3
+0556:  BSET.B  2CD.3
+....................       delay_us(1); 
+0558:  REPEAT  #2
+055A:  NOP     
+....................       output_low(EXP_OUT_CLOCK); 
+055C:  BCLR.B  2C9.3
+055E:  BCLR.B  2CD.3
+....................    }   
+0560:  DEC.B   088C
+0562:  BRA     53C
+....................    output_high(EXP_OUT_ENABLE); 
+0564:  BCLR.B  2C9.2
+0566:  BSET.B  2CD.2
+....................    delay_us(1); 
+0568:  REPEAT  #2
+056A:  NOP     
+....................    output_low(EXP_OUT_ENABLE); 
+056C:  BCLR.B  2C9.2
+056E:  BCLR.B  2CD.2
+.................... } 
+0570:  RETURN  
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... // adc_init() 
+.................... // Purpose: To initialize the MCP342X. 
+.................... // Parameters: address - Optional parameter for specifying the address of the 
+.................... //                       MCP342X to initialize.  Allows for initializing multiple 
+.................... //                       devices on same bus.  Driver only supports one device 
+.................... //                       configuration.  Defaults to MCP342X_ADDRESS if not 
+.................... //                       specified. 
+.................... // Returns:    Nothing. 
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... /* 
+.................... void adc_init(unsigned int8 address=MCP342X_ADDRESS) 
+.................... { 
+....................   i2c_start(MCP342X_STREAM);  //send I2C start 
+....................   i2c_write(MCP342X_STREAM, MCP342X_DEVICE_CODE | (address << 1));  //send write command 
+....................   i2c_write(MCP342X_STREAM, MCP342X_MODE | MCP342X_BITS | MCP342X_GAIN | (MCP342X_CHANNEL << 5));  //send device configuration 
+....................   i2c_stop(MCP342X_STREAM);  //send I2C stop 
+.................... } 
+.................... */ 
+....................  
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... // set_adc_channel_mcp() 
+.................... // Purpose: To set the channel the MCP342X performs A/D Conversion on.  Only 
+.................... //          used for MCP3422, MCP3423, MCP3424, MCP3426, MCP3427 and MCP3428 
+.................... //          devices. 
+.................... // Parameters: channel - Channel to set MCP342X to. 
+.................... //             address - Optional parameter for specifying the address of the  
+.................... //                       MCP342X to set.  Allows for using multiple devices on  
+.................... //                       same bus.  Defaults to MCP342X_ADDRESS if not specified. 
+.................... // Returns:    Nothing. 
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... /* 
+.................... void set_adc_channel_mcp(unsigned int8 channel, unsigned int8 address=MCP342X_ADDRESS) 
+.................... { 
+....................   i2c_start(MCP342X_STREAM);  //send I2C start 
+....................   i2c_write(MCP342X_STREAM, MCP342X_DEVICE_CODE | (address << 1));  //send write command 
+....................   i2c_write(MCP342X_STREAM, MCP342X_MODE | MCP342X_BITS | MCP342X_GAIN | (channel << 5));  //send device configuration 
+....................   i2c_stop(MCP342X_STREAM);  //send I2C stop 
+.................... } 
+.................... */ 
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... // read_adc_mcp() 
+.................... // Purpose: To read the last adc conversion from device, raw value read from 
+.................... //          device. If device configured for One-Shot mode, it will initiate the 
+.................... //          conversion.  Function will wait for a new conversion before returning. 
+.................... // Parameters: address - Optional parameter for specifying the address of the 
+.................... //                       MCP342X to read.  Allows for reading multiple devices on 
+.................... //                       same bus.  Defaults to MCP342X_ADDRESS if not specified. 
+.................... // Returns:   signed int32 or signed int16 value depending MCP342X_BITS value. 
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+....................  
+.................... /* 
+.................... #if MCP342X_BITS == MCP342X_18BITS 
+.................... signed int32 read_adc_mcp(unsigned int8 address=MCP342X_ADDRESS) 
+.................... #else 
+.................... signed int16 read_adc_mcp(unsigned int8 address=MCP342X_ADDRESS) 
+.................... #endif 
+.................... { 
+....................   union 
+....................   { 
+....................    #if MCP342X_BITS == MCP342X_18BITS 
+....................     signed int32 sint32; 
+....................     unsigned int8 b[4]; 
+....................    #else 
+....................     signed int16 sint16; 
+....................     unsigned int8 b[2]; 
+....................    #endif 
+....................   } result; 
+....................   unsigned int8 status = 0x80; 
+.................... */ 
+....................    /* 
+....................   #if MCP342X_MODE == MCP342X_ONE_SHOT 
+....................    i2c_start(MCP342X_STREAM);  //send I2C start 
+....................    i2c_write(MCP342X_STREAM, MCP342X_DEVICE_CODE | (address << 1));  //send write command 
+....................    i2c_write(MCP342X_STREAM, MCP342X_START_CONVERSTION | MCP342X_MODE | MCP342X_BITS | MCP342X_GAIN);  //initiate conversion 
+....................    i2c_stop(MCP342X_STREAM);  //send I2C stop 
+....................   #endif 
+....................    */ 
+.................... /* 
+....................    i2c_start(MCP342X_STREAM);  //send I2C start 
+....................    i2c_write(MCP342X_STREAM, MCP342X_DEVICE_CODE | (address << 1) | 1);  //send read command 
+....................  
+....................   #if MCP342X_BITS == MCP342X_18BITS 
+....................    result.b[2] = i2c_read(MCP342X_STREAM, 1);  //read MSB 18 Bit mode 
+....................   #endif 
+....................    result.b[1] = i2c_read(MCP342X_STREAM, 1);  //read 2nd MSB 18 Bit mode, read MSB 16, 14 or 12 Bit mode 
+....................    result.b[0] = i2c_read(MCP342X_STREAM, 1);  //read LSB 
+....................    //status = i2c_read(MCP342X_STREAM, 1);       //read Status 
+.................... */   
+....................   /* 
+....................    if(bit_test(status,7))  //if RDY = 1, New conversion not ready 
+....................    { 
+....................      do 
+....................      { 
+....................        status = i2c_read(MCP342X_STREAM, 1);  //read Status 
+....................      } while(bit_test(status, 7)); //until RDY = 0 
+....................  
+....................      status = i2c_read(MCP342X_STREAM, 0);  //read Status, do nack 
+....................      i2c_stop();  //send I2C stop 
+....................  
+....................      i2c_start(MCP342X_STREAM);  //send I2C start 
+....................      i2c_write(MCP342X_STREAM, MCP342X_DEVICE_CODE | (address << 1) | 1);  //send read command 
+....................  
+....................     #if MCP342X_BITS == MCP342X_18BITS 
+....................      result.b[2] = i2c_read(MCP342X_STREAM, 1);  //read MSB 18 Bit mode 
+....................     #endif 
+....................      result.b[1] = i2c_read(MCP342X_STREAM, 1);  //read 2nd MSB 18 Bit mode, read MSB 16, 14 or 12 Bit mode 
+....................      result.b[0] = i2c_read(MCP342X_STREAM, 1);  //read LSB 
+....................    } 
+....................    */ 
+.................... /*    
+....................    status = i2c_read(MCP342X_STREAM, 0);  //read Status, do nack 
+....................    i2c_stop();  //send I2C stop 
+....................     
+....................   #if MCP342X_BITS == MCP342X_18BITS 
+....................    if(bit_test(result.b[2],1))  //if 18 Bit mode check sign bit 
+....................      result.b[3] = 0xFF; 
+....................    else 
+....................      result.b[3] = 0; 
+....................   #endif 
+....................  
+....................   #if MCP342X_BITS == MCP342X_18BITS 
+....................    return(result.sint32); 
+....................   #else 
+....................    return(result.sint16); 
+....................   #endif 
+.................... } 
+.................... */ 
+....................  
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... // read_adc_volts_mcp() 
+.................... // Purpose: To read the last adc conversion from device, actual volt value read 
+.................... //          from device. 
+.................... // Parameters: address - Optional parameter for specifying the address of the 
+.................... //                       MCP342X to read.  Allows for reading multiple devices on 
+.................... //                       same bus.  Defaults to MCP342X_ADDRESS if not specified. 
+.................... // Returns:   float32 
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... /* 
+.................... float32 read_adc_volts_mcp(unsigned int8 address=MCP342X_ADDRESS) 
+.................... { 
+....................  #if MCP342X_BITS == MCP342X_18BITS 
+....................   signed int32 result; 
+....................  #else 
+....................   signed int16 result; 
+....................  #endif 
+....................  
+....................   float32 fresult; 
+....................  
+....................   result = read_adc_mcp(address); 
+....................  
+....................   #if MCP342X_BITS == MCP342X_12BITS 
+....................    fresult = (float32)result * 0.001; 
+....................   #elif MCP342X_BITS == MCP342X_14BITS 
+....................    fresult = (float32)result * 0.00025; 
+....................   #elif MCP342X_BITS == MCP342X_16BITS 
+....................    fresult = (float32)result * 0.0000625; 
+....................   #else 
+....................    fresult = (float32)result * 0.000015625; 
+....................   #endif 
+....................  
+....................   #if MCP342X_GAIN == MCP342X_8X_GAIN 
+....................    fresult /= 8; 
+....................   #elif MCP342X_GAIN == MCP342X_4X_GAIN 
+....................    fresult /= 4; 
+....................   #elif MCP342X_gain == MCP342X_2X_GAIN 
+....................    fresult /= 2; 
+....................   #endif 
+....................  
+....................    return(fresult); 
+.................... } 
+.................... */ 
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... // mcp_latch_address() 
+.................... // Purpose: To latch the logic of the external address selection pins.  Only used 
+.................... //          for MCP3423, MCP3424, MCP3427 and MCP3428 devices.  Latch is performed 
+.................... //          automatically on power-up.  This function can be used incase Vdd rises 
+.................... //          slowly and you want to ensure that the pins are latched when Vdd is  
+.................... //          stable.  Calling this function will cause all MCP342X device on bus to 
+.................... //          latch their address pins. 
+.................... // Parameters: None 
+.................... // Returns:    Nothing 
+.................... ////////////////////////////////////////////////////////////////////////////////// 
+.................... /* 
+.................... void mcp_latch_address(void) 
+.................... { 
+....................    i2c_start(MCP342X_STREAM); 
+....................    i2c_write(MCP342X_GENERAL_CALL_ADDRESS); 
+....................    i2c_write(MCP342X_GENERAL_CALL_LATCH); 
+....................    i2c_stop(MCP342X_STREAM); 
+.................... } 
+.................... */ 
+.................... /*==============================*/ 
+....................  
+.................... /* 
+.................... void StartTimer(void) 
+.................... { 
+....................    enable_interrupts(INT_TIMER3); 
+.................... } 
+.................... void StopTimer(void) 
+.................... { 
+....................    disable_interrupts(INT_TIMER3); 
+.................... } 
+.................... */ 
+....................  
+.................... void StartTimer(void) 
+.................... { 
+....................    TIMER_Flag = 1; 
+*
+117C:  MOV.B   #1,W0L
+117E:  MOV.B   W0L,860
+.................... } 
+1180:  RETURN  
+.................... void StopTimer(void) 
+.................... { 
+....................    TIMER_Flag = 0; 
+1182:  CLR.B   860
+.................... } 
+1184:  RETURN  
+....................  
+....................  
+.................... void Read_VDC(void) 
+.................... { 
+1186:  MOV     W5,[W15++]
+1188:  MOV     W6,[W15++]
+118A:  MOV     W7,[W15++]
+118C:  MOV     W8,[W15++]
+....................   //static int V_to_Seg;  
+....................  
+....................   //disable_interrupts(INTR_GLOBAL); 
+....................   real_data = Soft_read_adc_mcp(); 
+118E:  CALL    8AC
+1192:  MOV     W0,830
+....................   //enable_interrupts(INTR_GLOBAL); 
+....................   
+....................   vout = (real_data * 2.048) / 32767.0; // see text 
+1194:  MOV     830,W5
+1196:  MOV     W5,W0
+1198:  CLR     W3
+119A:  BTSC    W0.F
+119C:  SETM    W3
+119E:  MOV     W3,W1
+11A0:  MOV     W3,W2
+11A2:  CALL    8EA
+11A6:  MOV     W5,[W15++]
+11A8:  MOV     #A9FC,W4
+11AA:  MOV     #D2F1,W5
+11AC:  MOV     #624D,W6
+11AE:  MOV     #4000,W7
+11B0:  CALL    94E
+11B4:  MOV     [--W15],W5
+11B6:  MOV     W0,W5
+11B8:  MOV     W1,W6
+11BA:  MOV     W2,W7
+11BC:  MOV     W3,W8
+11BE:  MOV     W5,[W15++]
+11C0:  MOV     W6,[W15++]
+11C2:  MOV     W7,[W15++]
+11C4:  MOV     W5,W0
+11C6:  MOV     W6,W1
+11C8:  MOV     W7,W2
+11CA:  MOV     W8,W3
+11CC:  MOV     #0,W4
+11CE:  MOV     #0,W5
+11D0:  MOV     #FFC0,W6
+11D2:  MOV     #40DF,W7
+11D4:  CALL    A5C
+11D8:  MOV     [--W15],W7
+11DA:  MOV     [--W15],W6
+11DC:  MOV     [--W15],W5
+11DE:  CALL    B64
+11E2:  MOV     W1,832
+11E4:  MOV     W2,834
+....................   vin = vout / (R2/(R1+R2)); 
+11E6:  BCLR.B  43.0
+11E8:  MOV     83A,W0
+11EA:  MOV     83C,W1
+11EC:  MOV     83E,W2
+11EE:  MOV     840,W3
+11F0:  CALL    BA8
+11F4:  MOV     W0,W2
+11F6:  MOV     W1,W3
+11F8:  MOV     83E,W0
+11FA:  MOV     840,W1
+11FC:  CALL    D48
+1200:  MOV     W0,W2
+1202:  MOV     W1,W3
+1204:  MOV     832,W0
+1206:  MOV     834,W1
+1208:  CALL    D48
+120C:  MOV     W0,836
+120E:  MOV     W1,838
+....................    
+....................   DC_V =(int16)vin; 
+1210:  MOV     836,W0
+1212:  MOV     838,W1
+1214:  CALL    E12
+1218:  MOV     W0,808
+....................  
+....................   vin = vin*10.0;  // for 24 48 V  
+121A:  MOV     836,W0
+121C:  MOV     838,W1
+121E:  MOV     #0,W2
+1220:  MOV     #4120,W3
+1222:  CALL    10BE
+1226:  MOV     W0,836
+1228:  MOV     W1,838
+....................   DC_V7seg = (int16)vin; 
+122A:  MOV     836,W0
+122C:  MOV     838,W1
+122E:  CALL    E12
+1232:  MOV     W0,80A
+....................    
+....................   if((DC_V<0)||(DC_V>300)) 
+1234:  MOV     808,W4
+1236:  MOV     #12C,W3
+1238:  CP      W3,W4
+123A:  BRA     C,1240
+....................   { 
+....................     DC_V =0; 
+123C:  CLR     808
+....................     DC_V7seg=0; 
+123E:  CLR     80A
+....................   } 
+....................    
+....................   int8 i; 
+....................   for(i=0;i<10;i++) 
+1240:  CLR.B   86E
+1242:  MOV     86E,W4
+1244:  CP.B    W4L,#A
+1246:  BRA     GE,126C
+....................   { 
+....................     DC_Average[i] = DC_Average[i+1]; 
+1248:  MOV.B   86E,W0L
+124A:  SE      W0,W0
+124C:  MOV     W0,W4
+124E:  MUL.UU  W4,#2,W0
+1250:  MOV     #80C,W4
+1252:  ADD     W0,W4,W5
+1254:  MOV     86E,W4
+1256:  ADD.B   W4L,#1,W4L
+1258:  MOV.B   W4L,W0L
+125A:  MOV.B   W0L,0
+125C:  MOV.B   W0L,W4L
+125E:  CLR.B   9
+1260:  MUL.UU  W4,#2,W0
+1262:  MOV     #80C,W4
+1264:  ADD     W0,W4,W0
+1266:  MOV     [W0],[W5]
+....................   } 
+1268:  INC.B   086E
+126A:  BRA     1242
+....................   DC_Average[10] = DC_V7seg; 
+126C:  PUSH    80A
+126E:  POP     820
+....................    
+....................   DC_V7seg =0; 
+1270:  CLR     80A
+....................    
+....................   DC_V7seg = DC_Average[0]; 
+1272:  PUSH    80C
+1274:  POP     80A
+....................   DC_V7seg = DC_V7seg + DC_Average[1]; 
+1276:  MOV     80A,W0
+1278:  ADD     80E,W0
+127A:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg + DC_Average[2]; 
+127C:  MOV     80A,W0
+127E:  ADD     810,W0
+1280:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg + DC_Average[3]; 
+1282:  MOV     80A,W0
+1284:  ADD     812,W0
+1286:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg + DC_Average[4]; 
+1288:  MOV     80A,W0
+128A:  ADD     814,W0
+128C:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg + DC_Average[5]; 
+128E:  MOV     80A,W0
+1290:  ADD     816,W0
+1292:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg + DC_Average[6]; 
+1294:  MOV     80A,W0
+1296:  ADD     818,W0
+1298:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg + DC_Average[7]; 
+129A:  MOV     80A,W0
+129C:  ADD     81A,W0
+129E:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg + DC_Average[8]; 
+12A0:  MOV     80A,W0
+12A2:  ADD     81C,W0
+12A4:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg + DC_Average[9]; 
+12A6:  MOV     80A,W0
+12A8:  ADD     81E,W0
+12AA:  MOV     W0,80A
+....................   DC_V7seg = DC_V7seg/10; 
+12AC:  MOV     80A,W4
+12AE:  MOV     #A,W3
+12B0:  REPEAT  #11
+12B2:  DIV.S   W4,W3
+12B4:  MOV     W0,80A
+....................    
+....................    
+.................... //enum{State_nor,State_PreUnder,State_Under,State_PreUnderRes,State_UnderRes,State_PreOver,State_Over,State_PreOverRes,State_OverRes};  
+.................... // ************************UNDER********************* 
+....................    if(StartMeasureCount <=0) 
+12B6:  MOV     85E,W4
+12B8:  CP      W4,#0
+12BA:  BRA     GT,1424
+....................    { 
+....................      if((DC_V <= UnderValue)&&(State == State_nor)) 
+12BC:  MOV     808,W0
+12BE:  MOV     856,W4
+12C0:  CP      W4,W0
+12C2:  BRA     NC,134A
+12C4:  CP0.B   845
+12C6:  BRA     NZ,134A
+....................      { 
+....................        UnderTimeCount = UnderTimSetValue*1000; 
+12C8:  MOV     852,W4
+12CA:  MOV     #3E8,W3
+12CC:  MUL.SS  W4,W3,W0
+12CE:  MOV     W0,84A
+....................        switch(UnderTimeCount) 
+....................        { 
+12D0:  MOV     84A,W0
+12D2:  MOV     #3E8,W4
+12D4:  CP      W0,W4
+12D6:  BRA     Z,12F2
+12D8:  MOV     #7D0,W4
+12DA:  CP      W0,W4
+12DC:  BRA     Z,12FA
+12DE:  MOV     #BB8,W4
+12E0:  CP      W0,W4
+12E2:  BRA     Z,1302
+12E4:  MOV     #FA0,W4
+12E6:  CP      W0,W4
+12E8:  BRA     Z,130A
+12EA:  MOV     #1388,W4
+12EC:  CP      W0,W4
+12EE:  BRA     Z,1312
+12F0:  BRA     131A
+....................          case 1000: 
+....................             UnderTimeCount =UnderTimeCount-80; 
+12F2:  MOV     84A,W4
+12F4:  SUB     #50,W4
+12F6:  MOV     W4,84A
+....................          break; 
+12F8:  BRA     131C
+....................          case 2000: 
+....................             UnderTimeCount =UnderTimeCount-100; 
+12FA:  MOV     84A,W4
+12FC:  SUB     #64,W4
+12FE:  MOV     W4,84A
+....................          break; 
+1300:  BRA     131C
+....................          case 3000: 
+....................             UnderTimeCount =UnderTimeCount-100; 
+1302:  MOV     84A,W4
+1304:  SUB     #64,W4
+1306:  MOV     W4,84A
+....................          break; 
+1308:  BRA     131C
+....................          case 4000: 
+....................             UnderTimeCount =UnderTimeCount-70; 
+130A:  MOV     84A,W4
+130C:  SUB     #46,W4
+130E:  MOV     W4,84A
+....................          break; 
+1310:  BRA     131C
+....................          case 5000: 
+....................             UnderTimeCount =UnderTimeCount-100; 
+1312:  MOV     84A,W4
+1314:  SUB     #64,W4
+1316:  MOV     W4,84A
+....................          break; 
+1318:  BRA     131C
+....................          default: 
+....................             UnderTimeCount =UnderTimeCount-0; 
+....................          break; 
+131A:  BRA     131C
+....................        } 
+....................        FlashLEDUnder = true;      
+131C:  BSET.B  802.0
+....................        State = State_PreUnder; 
+131E:  MOV.B   #1,W0L
+1320:  MOV.B   W0L,845
+....................        if(UnderTimeCount ==0) 
+1322:  CP0     84A
+1324:  BRA     NZ,133E
+....................        { 
+....................          output_low(Under_Rly);//on rly 
+1326:  BCLR.B  2C8.6
+1328:  BCLR.B  2CC.6
+....................          output_low(Over_Rly);//on rly 
+132A:  BCLR.B  2C8.7
+132C:  BCLR.B  2CC.7
+....................          State = State_Under; 
+132E:  MOV.B   #2,W0L
+1330:  MOV.B   W0L,845
+....................          FlashLEDUnder = false;   
+1332:  BCLR.B  802.0
+....................          output_high(LED_Under);//on led 
+1334:  BCLR.B  2C8.4
+1336:  BSET.B  2CC.4
+....................          output_low(LED_Over); 
+1338:  BCLR.B  2C8.0
+133A:  BCLR.B  2CC.0
+....................        } 
+....................        else 
+133C:  BRA     134A
+....................        { 
+....................          if(Timer_flag ==0) 
+133E:  CP0.B   860
+1340:  BRA     NZ,1346
+....................          { 
+....................             StartTimer(); 
+1342:  CALL    117C
+....................          } 
+....................          output_high(PIN_B3); 
+1346:  BCLR.B  2C8.3
+1348:  BSET.B  2CC.3
+....................        }    
+....................      } 
+....................      if((DC_V >= UnderValue) && (State == State_PreUnder))  
+134A:  MOV     856,W0
+134C:  MOV     808,W4
+134E:  CP      W4,W0
+1350:  BRA     NC,136C
+1352:  MOV     844,W4
+1354:  LSR     W4,#8,W4
+1356:  CP.B    W4L,#1
+1358:  BRA     NZ,136C
+....................      { 
+....................        output_low(LED_Under); 
+135A:  BCLR.B  2C8.4
+135C:  BCLR.B  2CC.4
+....................        output_high(LED_Over);  
+135E:  BCLR.B  2C8.0
+1360:  BSET.B  2CC.0
+....................        UnderTimeCount = 0; 
+1362:  CLR     84A
+....................        State = State_nor; 
+1364:  CLR.B   845
+....................        FlashLEDUnder = false; //on led  
+1366:  BCLR.B  802.0
+....................        StopTimer(); 
+1368:  CALL    1182
+....................        /* 
+....................        if((UnderResTimeCount ==0) && (OverTimeCount ==0)&& (OverResTimeCount ==0)) 
+....................        { 
+....................          StopTimer(); 
+....................        } 
+....................        */ 
+....................      } 
+....................       
+....................      if((DC_V >= UnderResValue) && (State == State_Under)) 
+136C:  MOV     85A,W0
+136E:  MOV     808,W4
+1370:  CP      W4,W0
+1372:  BRA     NC,1400
+1374:  MOV     844,W4
+1376:  LSR     W4,#8,W4
+1378:  CP.B    W4L,#2
+137A:  BRA     NZ,1400
+....................      { 
+....................        UnderResTimeCount = UnderResTimSetValue*1000; //40*25ms = 1 Sec 
+137C:  MOV     850,W4
+137E:  MOV     #3E8,W3
+1380:  MUL.SS  W4,W3,W0
+1382:  MOV     W0,846
+....................        switch(UnderResTimeCount) 
+....................        { 
+1384:  MOV     846,W0
+1386:  MOV     #3E8,W4
+1388:  CP      W0,W4
+138A:  BRA     Z,13A6
+138C:  MOV     #7D0,W4
+138E:  CP      W0,W4
+1390:  BRA     Z,13AE
+1392:  MOV     #BB8,W4
+1394:  CP      W0,W4
+1396:  BRA     Z,13B6
+1398:  MOV     #FA0,W4
+139A:  CP      W0,W4
+139C:  BRA     Z,13BE
+139E:  MOV     #1388,W4
+13A0:  CP      W0,W4
+13A2:  BRA     Z,13C6
+13A4:  BRA     13CE
+....................          case 1000: 
+....................             UnderResTimeCount =UnderResTimeCount-80; 
+13A6:  MOV     846,W4
+13A8:  SUB     #50,W4
+13AA:  MOV     W4,846
+....................          break; 
+13AC:  BRA     13D0
+....................          case 2000: 
+....................             UnderResTimeCount =UnderResTimeCount-50; 
+13AE:  MOV     846,W4
+13B0:  SUB     #32,W4
+13B2:  MOV     W4,846
+....................          break; 
+13B4:  BRA     13D0
+....................          case 3000: 
+....................             UnderResTimeCount =UnderResTimeCount-70; 
+13B6:  MOV     846,W4
+13B8:  SUB     #46,W4
+13BA:  MOV     W4,846
+....................          break; 
+13BC:  BRA     13D0
+....................          case 4000: 
+....................             UnderResTimeCount =UnderResTimeCount-70; 
+13BE:  MOV     846,W4
+13C0:  SUB     #46,W4
+13C2:  MOV     W4,846
+....................          break; 
+13C4:  BRA     13D0
+....................          case 5000: 
+....................             UnderResTimeCount =UnderResTimeCount-70; 
+13C6:  MOV     846,W4
+13C8:  SUB     #46,W4
+13CA:  MOV     W4,846
+....................          break; 
+13CC:  BRA     13D0
+....................          default: 
+....................             UnderResTimeCount =UnderResTimeCount-0; 
+....................          break; 
+13CE:  BRA     13D0
+....................        } 
+....................        FlashLEDOver = true; 
+13D0:  BSET.B  802.1
+....................        State = State_PreUnderRes; 
+13D2:  MOV.B   #3,W0L
+13D4:  MOV.B   W0L,845
+....................        if(UnderResTimeCount == 0) 
+13D6:  CP0     846
+13D8:  BRA     NZ,13F8
+....................        { 
+....................           output_high(Under_Rly);  
+13DA:  BCLR.B  2C8.6
+13DC:  BSET.B  2CC.6
+....................           output_high(Over_Rly);  
+13DE:  BCLR.B  2C8.7
+13E0:  BSET.B  2CC.7
+....................           if(State == State_PreUnderRes) 
+13E2:  MOV     844,W4
+13E4:  LSR     W4,#8,W4
+13E6:  CP.B    W4L,#3
+13E8:  BRA     NZ,13EC
+....................           { 
+....................              State = State_nor; 
+13EA:  CLR.B   845
+....................           } 
+....................           FlashLEDOver = false; 
+13EC:  BCLR.B  802.1
+....................           output_low(LED_Under);  
+13EE:  BCLR.B  2C8.4
+13F0:  BCLR.B  2CC.4
+....................           output_high(LED_Over);  
+13F2:  BCLR.B  2C8.0
+13F4:  BSET.B  2CC.0
+....................        } 
+....................        else 
+13F6:  BRA     1400
+....................        { 
+....................          if(Timer_flag ==0) 
+13F8:  CP0.B   860
+13FA:  BRA     NZ,1400
+....................          { 
+....................             StartTimer(); 
+13FC:  CALL    117C
+....................          } 
+....................        }      
+....................      } 
+....................      if((DC_V <= UnderResValue)&&(State == State_PreUnderRes)) 
+1400:  MOV     808,W0
+1402:  MOV     85A,W4
+1404:  CP      W4,W0
+1406:  BRA     NC,1424
+1408:  MOV     844,W4
+140A:  LSR     W4,#8,W4
+140C:  CP.B    W4L,#3
+140E:  BRA     NZ,1424
+....................      { 
+....................         output_high(LED_Under); 
+1410:  BCLR.B  2C8.4
+1412:  BSET.B  2CC.4
+....................         output_low(LED_Over);  
+1414:  BCLR.B  2C8.0
+1416:  BCLR.B  2CC.0
+....................         State = State_Under; 
+1418:  MOV.B   #2,W0L
+141A:  MOV.B   W0L,845
+....................         UnderResTimeCount = 0; 
+141C:  CLR     846
+....................         FlashLEDUnder = false; 
+141E:  BCLR.B  802.0
+....................         StopTimer(); 
+1420:  CALL    1182
+....................         /* 
+....................         if((UnderTimeCount ==0) && (OverTimeCount ==0)&& (OverResTimeCount ==0)) 
+....................          { 
+....................             StopTimer(); 
+....................          } 
+....................          */ 
+....................      }  
+....................       
+....................      /* 
+....................      //--****************OVER********************* 
+....................  
+....................      if((DC_V >= OverValue)&&((State == State_nor)||(State == State_PreUnderRes))) 
+....................      { 
+....................         OverTimeCount = OverTimSetValue*1000; 
+....................         switch(OverTimeCount) 
+....................         { 
+....................          case 1000: 
+....................             OverTimeCount =OverTimeCount-100; 
+....................          break; 
+....................          case 2000: 
+....................             OverTimeCount =OverTimeCount-80; 
+....................          break; 
+....................          case 3000: 
+....................             OverTimeCount =OverTimeCount-90; 
+....................          break; 
+....................          case 4000: 
+....................             OverTimeCount =OverTimeCount-100; 
+....................          break; 
+....................          case 5000: 
+....................             OverTimeCount =OverTimeCount-100; 
+....................          break; 
+....................          default: 
+....................             OverTimeCount =OverTimeCount-0; 
+....................          break; 
+....................         } 
+....................         FlashLEDOver = true; 
+....................         State = State_PreOver; 
+....................         if(OverTimeCount ==0) 
+....................         { 
+....................           output_high(Over_Rly);  
+....................           State = State_Over; 
+....................           FlashLEDOver = false; 
+....................           output_high(LED_Over);  
+....................         } 
+....................         else 
+....................         { 
+....................           if(Timer_flag ==0) 
+....................           { 
+....................             StartTimer(); 
+....................           } 
+....................         }   
+....................      } 
+....................      if((DC_V <= OverValue) &&(State == State_PreOver)) 
+....................      { 
+....................         output_low(LED_Over);  
+....................         OverTimeCount = 0; 
+....................         State = State_nor; 
+....................         FlashLEDOver = false; 
+....................         if((UnderTimeCount ==0) && (UnderResTimeCount ==0)&& (OverResTimeCount ==0)) 
+....................         { 
+....................           StopTimer(); 
+....................         } 
+....................      } 
+....................      if((DC_V <= OverResValue) && (State == State_Over)) 
+....................      {     
+....................          OverResTimeCount = OverResTimSetValue*1000; //40*25ms = 1 Sec 
+....................          switch(OverResTimeCount) 
+....................         { 
+....................             case 1000: 
+....................                OverResTimeCount =OverResTimeCount-100; 
+....................             break; 
+....................             case 2000: 
+....................                OverResTimeCount =OverResTimeCount-100; 
+....................             break; 
+....................             case 3000: 
+....................                OverResTimeCount =OverResTimeCount-110; 
+....................             break; 
+....................             case 4000: 
+....................                OverResTimeCount =OverResTimeCount-90; 
+....................             break; 
+....................             case 5000: 
+....................                OverResTimeCount =OverResTimeCount-110; 
+....................             break; 
+....................             default: 
+....................                OverResTimeCount =OverResTimeCount-0; 
+....................             break; 
+....................         } 
+....................          FlashLEDOver = true; 
+....................          State = State_PreOverRes; 
+....................          if(OverResTimeCount == 0) 
+....................          { 
+....................             output_low(Over_Rly);  
+....................             if(State == State_PreOverRes) 
+....................             { 
+....................               State = State_nor; 
+....................             } 
+....................             FlashLEDOver = false; 
+....................             output_low(LED_Over);  
+....................          } 
+....................          else 
+....................          { 
+....................            if(Timer_flag ==0) 
+....................            { 
+....................              StartTimer(); 
+....................            } 
+....................          }         
+....................      } 
+....................      if((DC_V >= OverResValue)&&(State == State_PreOverRes)) 
+....................      { 
+....................         output_high(LED_Over);  
+....................         State = State_Over; 
+....................         OverResTimeCount = 0; 
+....................         FlashLEDOver = false; 
+....................         if((UnderTimeCount ==0) && (UnderResTimeCount ==0)&& (OverTimeCount ==0)) 
+....................         { 
+....................           StopTimer(); 
+....................         } 
+....................      } 
+....................      */ 
+....................   
+....................    } 
+....................     
+.................... } 
+1424:  MOV     [--W15],W8
+1426:  MOV     [--W15],W7
+1428:  MOV     [--W15],W6
+142A:  MOV     [--W15],W5
+142C:  RETURN  
+....................  
+.................... void buttonRead() 
+.................... { 
+*
+0E96:  MOV     W5,[W15++]
+0E98:  MOV     W6,[W15++]
+0E9A:  MOV     W7,[W15++]
+....................   enum{st1,st2,st3,st4,st5}; 
+....................   static unsigned int state,deb; //deb==Debount 
+*
+1494:  CLR     866
+1496:  CLR     868
+....................   int tempValue;   
+....................   if((input(BT_SET) == 1)&&(input(BT_UP) == 1)&&(input(BT_DW) == 1)) 
+*
+0E9C:  BSET.B  2C9.7
+0E9E:  BTSS.B  2CB.7
+0EA0:  BRA     EB2
+0EA2:  BSET.B  2C9.6
+0EA4:  BTSS.B  2CB.6
+0EA6:  BRA     EB2
+0EA8:  BSET.B  2C9.5
+0EAA:  BTSS.B  2CB.5
+0EAC:  BRA     EB2
+....................   {         
+....................      state = st1;      
+0EAE:  CLR     866
+....................      return;  
+0EB0:  BRA     10B6
+....................   }   
+....................   if(((input(BT_SET) == 0)||(input(BT_UP) == 0)||(input(BT_DW) == 0))&&state == st1) 
+0EB2:  BSET.B  2C9.7
+0EB4:  BTSS.B  2CB.7
+0EB6:  BRA     EC4
+0EB8:  BSET.B  2C9.6
+0EBA:  BTSS.B  2CB.6
+0EBC:  BRA     EC4
+0EBE:  BSET.B  2C9.5
+0EC0:  BTSC.B  2CB.5
+0EC2:  BRA     ED2
+0EC4:  CP0     866
+0EC6:  BRA     NZ,ED2
+....................   {      
+....................      state = st2; 
+0EC8:  MOV     #1,W4
+0ECA:  MOV     W4,866
+....................      deb = 1; //debound     
+0ECC:  MOV     #1,W4
+0ECE:  MOV     W4,868
+....................      return; 
+0ED0:  BRA     10B6
+....................   } 
+....................   if(((input(BT_SET) == 0)||(input(BT_UP) == 0)||(input(BT_DW) == 0))&&state == st2) 
+0ED2:  BSET.B  2C9.7
+0ED4:  BTSS.B  2CB.7
+0ED6:  BRA     EE4
+0ED8:  BSET.B  2C9.6
+0EDA:  BTSS.B  2CB.6
+0EDC:  BRA     EE4
+0EDE:  BSET.B  2C9.5
+0EE0:  BTSC.B  2CB.5
+0EE2:  BRA     1092
+0EE4:  MOV     866,W4
+0EE6:  CP      W4,#1
+0EE8:  BRA     NZ,1092
+....................   { 
+....................     if(deb) 
+0EEA:  CP0     868
+0EEC:  BRA     Z,EF4
+....................     {      
+....................       deb--; 
+0EEE:  DEC     0868
+....................       return; 
+0EF0:  BRA     10B6
+....................     }     
+....................     else    
+0EF2:  BRA     1092
+....................     {  
+....................       if(input(BT_SET) == 0) 
+0EF4:  BSET.B  2C9.7
+0EF6:  BTSC.B  2CB.7
+0EF8:  BRA     F9C
+....................       { 
+....................          
+....................         //if(++mode > OverResTimSet)mode = nor; 
+....................         if(++mode > UnderResTimSet_UnOly)mode = Nor_UnOly; 
+0EFA:  INC.B   0844
+0EFC:  MOV     844,W4
+0EFE:  CP.B    W4L,#4
+0F00:  BRA     LEU,F04
+0F02:  CLR.B   844
+....................         ///////////////////////// 
+....................   
+....................         ///////////////////////// 
+....................         if(mode == Nor_UnOly)         
+0F04:  CP0.B   844
+0F06:  BRA     NZ,F1C
+....................         { 
+....................           // menuCount =1500*3000; 
+....................            if(set_mode) 
+0F08:  BTSS.B  802.2
+0F0A:  BRA     F1A
+....................            { 
+....................              set_mode = false; 
+0F0C:  BCLR.B  802.2
+....................              write_ext_eeprom(UnderResTimSet_addr,UnderResTimSetValue); 
+0F0E:  MOV.B   #6,W0L
+0F10:  MOV.B   W0L,870
+0F12:  MOV.B   850,W0L
+0F14:  MOV.B   W0L,871
+0F16:  CALL    E3E
+....................            } 
+....................          }         
+....................          else if((mode == UnderSet_UnOly)) 
+0F1A:  BRA     F8C
+0F1C:  MOV     844,W4
+0F1E:  CP.B    W4L,#1
+0F20:  BRA     NZ,F30
+....................          {   
+....................            menuCount =1500*3000; 
+0F22:  MOV     #AA20,W4
+0F24:  MOV     W4,824
+0F26:  MOV     #44,W4
+0F28:  MOV     W4,826
+....................            if(set_mode)    
+0F2A:  BTSS.B  802.2
+0F2C:  BRA     F2E
+....................            { 
+....................              ; 
+....................            } 
+....................          } 
+....................          else if((mode == UnderResSet_UnOly)) 
+0F2E:  BRA     F8C
+0F30:  MOV     844,W4
+0F32:  CP.B    W4L,#2
+0F34:  BRA     NZ,F4E
+....................          { 
+....................            menuCount =1500*3000; 
+0F36:  MOV     #AA20,W4
+0F38:  MOV     W4,824
+0F3A:  MOV     #44,W4
+0F3C:  MOV     W4,826
+....................            if(set_mode) 
+0F3E:  BTSS.B  802.2
+0F40:  BRA     F4C
+....................            {  
+....................              write_ext_eeprom(UnderSet_addr,UnderValue); 
+0F42:  CLR.B   870
+0F44:  MOV.B   856,W0L
+0F46:  MOV.B   W0L,871
+0F48:  CALL    E3E
+....................            } 
+....................          }  
+....................          else if((mode == UnderTimSet_UnOly)) 
+0F4C:  BRA     F8C
+0F4E:  MOV     844,W4
+0F50:  CP.B    W4L,#3
+0F52:  BRA     NZ,F6E
+....................          { 
+....................            menuCount =1500*3000; 
+0F54:  MOV     #AA20,W4
+0F56:  MOV     W4,824
+0F58:  MOV     #44,W4
+0F5A:  MOV     W4,826
+....................            if(set_mode) 
+0F5C:  BTSS.B  802.2
+0F5E:  BRA     F6C
+....................            {  
+....................              write_ext_eeprom(UnderResSet_addr,UnderResValue);  
+0F60:  MOV.B   #2,W0L
+0F62:  MOV.B   W0L,870
+0F64:  MOV.B   85A,W0L
+0F66:  MOV.B   W0L,871
+0F68:  CALL    E3E
+....................            } 
+....................          } 
+....................          else if((mode == UnderResTimSet_UnOly)) 
+0F6C:  BRA     F8C
+0F6E:  MOV     844,W4
+0F70:  CP.B    W4L,#4
+0F72:  BRA     NZ,F8C
+....................          { 
+....................            menuCount =1500*3000; 
+0F74:  MOV     #AA20,W4
+0F76:  MOV     W4,824
+0F78:  MOV     #44,W4
+0F7A:  MOV     W4,826
+....................            if(set_mode) 
+0F7C:  BTSS.B  802.2
+0F7E:  BRA     F8C
+....................            {   
+....................              write_ext_eeprom(UnderTimSet_addr,UnderTimSetValue);   
+0F80:  MOV.B   #4,W0L
+0F82:  MOV.B   W0L,870
+0F84:  MOV.B   852,W0L
+0F86:  MOV.B   W0L,871
+0F88:  CALL    E3E
+....................            }  
+....................          } 
+....................  
+....................          menuCount =1500*3000; 
+0F8C:  MOV     #AA20,W4
+0F8E:  MOV     W4,824
+0F90:  MOV     #44,W4
+0F92:  MOV     W4,826
+....................          deb = 20; //Press hold 3sec for Enter Set mode.(60*50 =3000) 
+0F94:  MOV     #14,W4
+0F96:  MOV     W4,868
+....................          state = st3; 
+0F98:  MOV     #2,W4
+0F9A:  MOV     W4,866
+....................          ////////////////////////////////// 
+....................       } 
+....................       if((input(BT_UP) == 0)&&set_mode == true)      
+0F9C:  BSET.B  2C9.6
+0F9E:  BTSC.B  2CB.6
+0FA0:  BRA     1018
+0FA2:  BTSS.B  802.2
+0FA4:  BRA     1018
+....................       { 
+....................         switch(mode) 
+....................         { 
+0FA6:  MOV.B   844,W0L
+0FA8:  CLR.B   1
+0FAA:  XOR     #1,W0
+0FAC:  BRA     Z,FBC
+0FAE:  XOR     #3,W0
+0FB0:  BRA     Z,FD2
+0FB2:  XOR     #1,W0
+0FB4:  BRA     Z,FE4
+0FB6:  XOR     #7,W0
+0FB8:  BRA     Z,FF8
+0FBA:  BRA     100C
+....................           case UnderSet_UnOly: 
+....................             tempValue = UnderValue; 
+0FBC:  PUSH    856
+0FBE:  POP     86E
+....................             UnderValue++; 
+0FC0:  INC     0856
+....................             if(UnderValue > UnderResValue-1) 
+0FC2:  MOV     85A,W4
+0FC4:  SUB     W4,#1,W0
+0FC6:  MOV     856,W4
+0FC8:  CP      W4,W0
+0FCA:  BRA     LEU,FD0
+....................             { 
+....................                UnderValue = tempValue; 
+0FCC:  PUSH    86E
+0FCE:  POP     856
+....................             } 
+....................           break; 
+0FD0:  BRA     100C
+....................            
+....................           case UnderResSet_UnOly: 
+....................             tempValue = UnderResValue; 
+0FD2:  PUSH    85A
+0FD4:  POP     86E
+....................             UnderResValue++; 
+0FD6:  INC     085A
+....................             if(UnderResValue > NORMAL_VOLT)UnderResValue = tempValue; 
+0FD8:  MOV     85A,W4
+0FDA:  CP      W4,#18
+0FDC:  BRA     LEU,FE2
+0FDE:  PUSH    86E
+0FE0:  POP     85A
+....................           break; 
+0FE2:  BRA     100C
+....................            
+....................           case UnderTimSet_UnOly: 
+....................             tempValue = UnderTimSetValue; 
+0FE4:  PUSH    852
+0FE6:  POP     86E
+....................             UnderTimSetValue++; 
+0FE8:  INC     0852
+....................             if(UnderTimSetValue > MAX_TIME)UnderTimSetValue = tempValue; 
+0FEA:  MOV     852,W4
+0FEC:  MOV     #3C,W3
+0FEE:  CP      W3,W4
+0FF0:  BRA     GE,FF6
+0FF2:  PUSH    86E
+0FF4:  POP     852
+....................           break; 
+0FF6:  BRA     100C
+....................  
+....................           case UnderResTimSet_UnOly: 
+....................             tempValue = UnderResTimSetValue; 
+0FF8:  PUSH    850
+0FFA:  POP     86E
+....................             UnderResTimSetValue++; 
+0FFC:  INC     0850
+....................             if(UnderResTimSetValue > MAX_TIME) UnderResTimSetValue = tempValue; 
+0FFE:  MOV     850,W4
+1000:  MOV     #3C,W3
+1002:  CP      W3,W4
+1004:  BRA     GE,100A
+1006:  PUSH    86E
+1008:  POP     850
+....................           break; 
+100A:  BRA     100C
+....................             
+....................         } 
+....................         /////////////////////////////////// 
+....................         state = st4; 
+100C:  MOV     #3,W4
+100E:  MOV     W4,866
+....................         menuCount =1500*3000; 
+1010:  MOV     #AA20,W4
+1012:  MOV     W4,824
+1014:  MOV     #44,W4
+1016:  MOV     W4,826
+....................       } 
+....................       if((input(BT_DW) == 0)&&set_mode == true)      
+1018:  BSET.B  2C9.5
+101A:  BTSC.B  2CB.5
+101C:  BRA     1092
+101E:  BTSS.B  802.2
+1020:  BRA     1092
+....................       { 
+....................         switch(mode) 
+....................         { 
+1022:  MOV.B   844,W0L
+1024:  CLR.B   1
+1026:  XOR     #1,W0
+1028:  BRA     Z,1038
+102A:  XOR     #3,W0
+102C:  BRA     Z,104A
+102E:  XOR     #1,W0
+1030:  BRA     Z,1062
+1032:  XOR     #7,W0
+1034:  BRA     Z,1074
+1036:  BRA     1086
+....................           case UnderSet_UnOly: 
+....................           tempValue = UnderValue; 
+1038:  PUSH    856
+103A:  POP     86E
+....................           UnderValue--; 
+103C:  DEC     0856
+....................           if(UnderValue < MIN_VOLT)UnderValue = tempValue; 
+103E:  MOV     856,W4
+1040:  CP      W4,#F
+1042:  BRA     C,1048
+1044:  PUSH    86E
+1046:  POP     856
+....................           break; 
+1048:  BRA     1086
+....................  
+....................           case UnderResSet_UnOly: 
+....................           tempValue = UnderResValue; 
+104A:  PUSH    85A
+104C:  POP     86E
+....................           UnderResValue--; 
+104E:  DEC     085A
+....................           if(UnderResValue < UnderValue +1)UnderResValue = tempValue; 
+1050:  MOV     856,W4
+1052:  ADD     W4,#1,W4
+1054:  MOV     W4,W0
+1056:  MOV     85A,W4
+1058:  CP      W4,W0
+105A:  BRA     C,1060
+105C:  PUSH    86E
+105E:  POP     85A
+....................           break; 
+1060:  BRA     1086
+....................  
+....................           case UnderTimSet_UnOly: 
+....................           tempValue = UnderTimSetValue; 
+1062:  PUSH    852
+1064:  POP     86E
+....................           UnderTimSetValue--; 
+1066:  DEC     0852
+....................           if(UnderTimSetValue < MIN_TIME) UnderTimSetValue = tempValue; 
+1068:  MOV     852,W4
+106A:  CP      W4,#0
+106C:  BRA     GE,1072
+106E:  PUSH    86E
+1070:  POP     852
+....................           break; 
+1072:  BRA     1086
+....................  
+....................           case UnderResTimSet_UnOly: 
+....................           tempValue = UnderResTimSetValue; 
+1074:  PUSH    850
+1076:  POP     86E
+....................           UnderResTimSetValue--; 
+1078:  DEC     0850
+....................           if(UnderResTimSetValue < MIN_TIME)UnderResTimSetValue = tempValue; 
+107A:  MOV     850,W4
+107C:  CP      W4,#0
+107E:  BRA     GE,1084
+1080:  PUSH    86E
+1082:  POP     850
+....................           break; 
+1084:  BRA     1086
+....................  
+....................         } 
+....................          
+....................         state = st4; 
+1086:  MOV     #3,W4
+1088:  MOV     W4,866
+....................         menuCount =1500*3000; 
+108A:  MOV     #AA20,W4
+108C:  MOV     W4,824
+108E:  MOV     #44,W4
+1090:  MOV     W4,826
+....................       } 
+....................     } 
+....................   } 
+....................   if((input(BT_SET) == 0)&&state == st3) 
+1092:  BSET.B  2C9.7
+1094:  BTSC.B  2CB.7
+1096:  BRA     10B6
+1098:  MOV     866,W4
+109A:  CP      W4,#2
+109C:  BRA     NZ,10B6
+....................   { 
+....................     if(deb) 
+109E:  CP0     868
+10A0:  BRA     Z,10A8
+....................     { 
+....................       deb--; 
+10A2:  DEC     0868
+....................       return; 
+10A4:  BRA     10B6
+....................     } 
+....................     else 
+10A6:  BRA     10AE
+....................     { 
+....................       //if(set_mode==false)flash_dot =40; 
+....................       set_mode = true; 
+10A8:  BSET.B  802.2
+....................       mode = UnderSet; 
+10AA:  MOV.B   #1,W0L
+10AC:  MOV.B   W0L,844
+....................     } 
+....................     menuCount =1500*3000;   
+10AE:  MOV     #AA20,W4
+10B0:  MOV     W4,824
+10B2:  MOV     #44,W4
+10B4:  MOV     W4,826
+....................   } 
+.................... } 
+10B6:  MOV     [--W15],W7
+10B8:  MOV     [--W15],W6
+10BA:  MOV     [--W15],W5
+10BC:  RETURN  
+.................... void adjusttime(v0id) 
+.................... { 
+....................     
+.................... } 
+....................  
+....................  
+.................... ///////////////////////////////////////////////////////////// 
+.................... #int_TIMER3 
+.................... void TIMER3_isr(void)//1ms interrupt     
+.................... { 
+*
+0226:  PUSH    42
+0228:  PUSH    36
+022A:  MOV     W0,[W15++]
+022C:  MOV     #2,W0
+022E:  REPEAT  #C
+0230:  MOV     [W0++],[W15++]
+....................    /* 
+....................    if(StartMeasureCount) 
+....................    { 
+....................       if(--StartMeasureCount<=0) 
+....................       { 
+....................          StartMeasureCount = 0; 
+....................          //State = State_nor; 
+....................          UnderResTimeCount=0; 
+....................          OverResTimeCount=0; 
+....................          UnderTimeCount=0; 
+....................          OverTimeCount =0; 
+....................       } 
+....................    } 
+....................    */ 
+....................     
+....................  
+....................    if(TIMER_Flag) 
+0232:  CP0.B   860
+0234:  BRA     Z,2FA
+....................    { 
+....................      //flash_LED++;  
+....................      flash_LED_Under++;  
+0236:  INC.B   0803
+....................      flash_LED_Over++; 
+0238:  INC.B   0804
+....................       
+....................  
+....................       
+....................      /////////////// Under ////////////////////// 
+....................      if(UnderTimeCount) 
+023A:  CP0     84A
+023C:  BRA     Z,28A
+....................      { 
+....................        if(flash_LED_Under >=200) 
+023E:  MOV     802,W4
+0240:  LSR     W4,#8,W4
+0242:  MOV     #C8,W3
+0244:  CP.B    W3L,W4L
+0246:  BRA     GTU,260
+....................        { 
+....................          //flash_LED_Under =0; 
+....................          //output_toggle(LED_Under); 
+....................           
+....................          if(toggle_pin_under ==1) 
+0248:  MOV     804,W4
+024A:  LSR     W4,#8,W4
+024C:  CP.B    W4L,#1
+024E:  BRA     NZ,258
+....................          { 
+....................             toggle_pin_under =0; 
+0250:  CLR.B   805
+....................             output_high(LED_Under);  
+0252:  BCLR.B  2C8.4
+0254:  BSET.B  2CC.4
+....................          } 
+....................          else 
+0256:  BRA     260
+....................          { 
+....................             toggle_pin_under =1; 
+0258:  MOV.B   #1,W0L
+025A:  MOV.B   W0L,805
+....................             output_low(LED_Under); 
+025C:  BCLR.B  2C8.4
+025E:  BCLR.B  2CC.4
+....................          } 
+....................           
+....................        } 
+....................         
+....................        if(--UnderTimeCount <=0) 
+0260:  DEC     084A
+0262:  MOV     84A,W4
+0264:  CP      W4,#0
+0266:  BRA     GT,28A
+....................        { 
+....................          UnderTimeCount = 0; 
+0268:  CLR     84A
+....................          output_low(Under_Rly); 
+026A:  BCLR.B  2C8.6
+026C:  BCLR.B  2CC.6
+....................          output_low(Over_Rly);  
+026E:  BCLR.B  2C8.7
+0270:  BCLR.B  2CC.7
+....................          State = State_Under; 
+0272:  MOV.B   #2,W0L
+0274:  MOV.B   W0L,845
+....................          FlashLEDUnder = false; 
+0276:  BCLR.B  802.0
+....................          output_high(LED_Under);  
+0278:  BCLR.B  2C8.4
+027A:  BSET.B  2CC.4
+....................          output_low(LED_Over);  
+027C:  BCLR.B  2C8.0
+027E:  BCLR.B  2CC.0
+....................           
+....................          output_low(PIN_B3); 
+0280:  BCLR.B  2C8.3
+0282:  BCLR.B  2CC.3
+....................           
+....................          if(UnderResTimeCount ==0)  
+0284:  CP0     846
+0286:  BRA     NZ,28A
+....................          { 
+....................             TIMER_Flag = 0; 
+0288:  CLR.B   860
+....................          } 
+....................        } 
+....................      } 
+....................       
+....................      if(UnderResTimeCount) 
+028A:  CP0     846
+028C:  BRA     Z,2E4
+....................      { 
+....................        if(flash_LED_Under >=200) 
+028E:  MOV     802,W4
+0290:  LSR     W4,#8,W4
+0292:  MOV     #C8,W3
+0294:  CP.B    W3L,W4L
+0296:  BRA     GTU,2B0
+....................        { 
+....................          //flash_LED_Under =0; 
+....................          //output_toggle(LED_Under); 
+....................          if(toggle_pin_under==1) 
+0298:  MOV     804,W4
+029A:  LSR     W4,#8,W4
+029C:  CP.B    W4L,#1
+029E:  BRA     NZ,2A8
+....................          { 
+....................             toggle_pin_under =0; 
+02A0:  CLR.B   805
+....................             output_high(LED_Over);  
+02A2:  BCLR.B  2C8.0
+02A4:  BSET.B  2CC.0
+....................          } 
+....................          else 
+02A6:  BRA     2B0
+....................          { 
+....................             toggle_pin_under =1; 
+02A8:  MOV.B   #1,W0L
+02AA:  MOV.B   W0L,805
+....................             output_low(LED_Over); 
+02AC:  BCLR.B  2C8.0
+02AE:  BCLR.B  2CC.0
+....................          } 
+....................        }    
+....................        if(--UnderResTimeCount <=0) 
+02B0:  DEC     0846
+02B2:  MOV     846,W4
+02B4:  CP      W4,#0
+02B6:  BRA     GT,2E4
+....................        { 
+....................          UnderResTimeCount = 0; 
+02B8:  CLR     846
+....................          output_high(Under_Rly); 
+02BA:  BCLR.B  2C8.6
+02BC:  BSET.B  2CC.6
+....................          output_high(Over_Rly);  
+02BE:  BCLR.B  2C8.7
+02C0:  BSET.B  2CC.7
+....................          if(State == State_PreUnderRes) 
+02C2:  MOV     844,W4
+02C4:  LSR     W4,#8,W4
+02C6:  CP.B    W4L,#3
+02C8:  BRA     NZ,2CC
+....................          { 
+....................             State = State_nor; 
+02CA:  CLR.B   845
+....................          } 
+....................          FlashLEDUnder = false; 
+02CC:  BCLR.B  802.0
+....................          output_low(LED_Under); 
+02CE:  BCLR.B  2C8.4
+02D0:  BCLR.B  2CC.4
+....................          output_high(LED_Over);  
+02D2:  BCLR.B  2C8.0
+02D4:  BSET.B  2CC.0
+....................          if((UnderTimeCount ==0) && (OverTimeCount ==0)&& (OverResTimeCount ==0)) 
+02D6:  CP0     84A
+02D8:  BRA     NZ,2E4
+02DA:  CP0     84C
+02DC:  BRA     NZ,2E4
+02DE:  CP0     848
+02E0:  BRA     NZ,2E4
+....................          { 
+....................             TIMER_Flag = 0; 
+02E2:  CLR.B   860
+....................          } 
+....................        } 
+....................      } 
+....................       
+....................       
+....................       
+....................      if(flash_LED_Under >=200) 
+02E4:  MOV     802,W4
+02E6:  LSR     W4,#8,W4
+02E8:  MOV     #C8,W3
+02EA:  CP.B    W3L,W4L
+02EC:  BRA     GTU,2F0
+....................      { 
+....................         flash_LED_Under =0; 
+02EE:  CLR.B   803
+....................      } 
+....................      if(flash_LED_Over >=200) 
+02F0:  MOV     804,W4
+02F2:  MOV     #C8,W3
+02F4:  CP.B    W3L,W4L
+02F6:  BRA     GTU,2FA
+....................      { 
+....................         flash_LED_Over =0; 
+02F8:  CLR.B   804
+....................      } 
+....................  
+....................      
+....................    } 
+....................     
+....................  
+....................     
+....................     
+....................     
+....................     
+....................     
+.................... } 
+.................... //////////////////////////////////////////////////// 
+02FA:  BCLR.B  85.0
+02FC:  MOV     #1A,W0
+02FE:  REPEAT  #C
+0300:  MOV     [--W15],[W0--]
+0302:  MOV     [--W15],W0
+0304:  POP     36
+0306:  POP     42
+0308:  RETFIE  
+.................... #int_TIMER2 
+.................... void TIMER2_isr(void)//5ms interrupt     
+.................... {     
+*
+0572:  PUSH    42
+0574:  PUSH    36
+0576:  MOV     W0,[W15++]
+0578:  MOV     #2,W0
+057A:  REPEAT  #C
+057C:  MOV     [W0++],[W15++]
+....................    SegmentDisplay(); 
+057E:  CALL    30A
+....................    if(--flash_dot <=0)flash_dot =40; 
+0582:  DEC.B   0807
+0584:  CP0.B   807
+0586:  BRA     NZ,58C
+0588:  MOV.B   #28,W0L
+058A:  MOV.B   W0L,807
+....................     
+....................    if(ReadI2CCount ) 
+058C:  CP0.B   82D
+058E:  BRA     Z,598
+....................    { 
+....................       if(--ReadI2CCount ==0) 
+0590:  DEC.B   082D
+0592:  CP0.B   82D
+0594:  BRA     NZ,598
+....................       { 
+....................          ReadI2CCount =0; 
+0596:  CLR.B   82D
+....................       } 
+....................    } 
+....................     
+....................    if(StartMeasureCount) 
+0598:  CP0     85E
+059A:  BRA     Z,5AE
+....................    { 
+....................       if(--StartMeasureCount<=0) 
+059C:  DEC     085E
+059E:  MOV     85E,W4
+05A0:  CP      W4,#0
+05A2:  BRA     GT,5AE
+....................       { 
+....................          StartMeasureCount = 0; 
+05A4:  CLR     85E
+....................          UnderResTimeCount=0; 
+05A6:  CLR     846
+....................          OverResTimeCount=0; 
+05A8:  CLR     848
+....................          UnderTimeCount=0; 
+05AA:  CLR     84A
+....................          OverTimeCount =0; 
+05AC:  CLR     84C
+....................       } 
+....................    } 
+....................     
+....................    /* 
+....................    if(++HangCount >100){ 
+....................       HangCount = 0; 
+....................       if(Updateloop != oldloop ) 
+....................       { 
+....................         oldloop =Updateloop;  
+....................       } 
+....................       else 
+....................       { 
+....................          reset_cpu(); 
+....................          //adc_init(MCP342X_ADDRESS); 
+....................          //delay_ms(2); 
+....................          //Updateloop++; 
+....................       } 
+....................    } 
+....................    */ 
+.................... } 
+.................... /////////////////////////////////////////////////////// 
+05AE:  BCLR.B  84.7
+05B0:  MOV     #1A,W0
+05B2:  REPEAT  #C
+05B4:  MOV     [--W15],[W0--]
+05B6:  MOV     [--W15],W0
+05B8:  POP     36
+05BA:  POP     42
+05BC:  RETFIE  
+.................... void main() 
+.................... { 
+*
+142E:  MOV     #4444,W0
+1430:  MOV     W0,A6
+1432:  BSET.B  81.7
+1434:  CLR     744
+1436:  BCLR.B  802.0
+1438:  BCLR.B  802.1
+143A:  CLR.B   803
+143C:  CLR.B   804
+143E:  CLR.B   805
+1440:  CLR.B   806
+1442:  BCLR.B  802.2
+1444:  CLR.B   829
+1446:  CLR.B   82A
+1448:  CLR.B   82B
+144A:  MOV.B   #1,W0L
+144C:  MOV.B   W0L,82C
+144E:  CLR.B   82D
+1450:  BSET.B  802.3
+1452:  BSET.B  802.4
+1454:  BSET.B  802.5
+1456:  CLR     832
+1458:  CLR     834
+145A:  CLR     836
+145C:  CLR     838
+145E:  MOV     #4000,W4
+1460:  MOV     W4,83A
+1462:  MOV     #461C,W4
+1464:  MOV     W4,83C
+1466:  CLR     83E
+1468:  MOV     #442A,W4
+146A:  MOV     W4,840
+146C:  CLR.B   844
+146E:  CLR.B   845
+1470:  CLR     846
+1472:  CLR     848
+1474:  CLR     84A
+1476:  CLR     84C
+1478:  MOV     #258,W4
+147A:  MOV     W4,85E
+147C:  CLR.B   860
+147E:  CLR.B   861
+1480:  MOV     #7,W4
+1482:  MOV     W4,864
+1484:  SETM    32C
+1486:  SETM    32A
+1488:  MOV     #1780,W15
+148A:  MOV     #17FF,W0
+148C:  MOV     W0,20
+148E:  NOP     
+....................    setup_timer2(TMR_INTERNAL |TMR_DIV_BY_8,0x09C3);//5ms interrupt @ 4(8) Mhz Internals RC (Value in OCR) 
+*
+1498:  CLR     110
+149A:  MOV     #9C3,W4
+149C:  MOV     W4,10C
+149E:  MOV     #A010,W4
+14A0:  MOV     W4,110
+....................    setup_timer3(TMR_INTERNAL |TMR_DIV_BY_1,0x0F9F);//1ms interrupt @ 4(8) Mhz 
+14A2:  CLR     112
+14A4:  MOV     #F9F,W4
+14A6:  MOV     W4,10E
+14A8:  MOV     #A000,W4
+14AA:  MOV     W4,112
+....................    //setup_timer2(TMR_INTERNAL |TMR_DIV_BY_8,0x270F);//5ms interrupt @ 16(32) Mhz Internals RC (Value in OCR)    
+....................    //setup_timer3(TMR_INTERNAL |TMR_DIV_BY_1,0x3E7F);//1ms interrupt @ 16(32) Mhz  
+....................    enable_interrupts(INT_TIMER3);  
+14AC:  BSET.B  95.0
+....................     
+....................    RESTART_CAUSE(RESTART_BROWNOUT|RESTART_POWER_UP|RESTART_WATCHDOG); //jj 9/7/63 
+14AE:  MOV     740,W0
+14B0:  AND     W0,#5,W0
+14B2:  MOV     #FFFA,W0
+14B4:  AND     740
+14B6:  CP0     W0
+....................     
+....................    enable_interrupts(INT_TIMER2); 
+14B8:  BSET.B  94.7
+....................    enable_interrupts(INTR_GLOBAL); 
+14BA:  CLR     42
+....................     
+....................    //adc_init(MCP342X_ADDRESS); 
+....................    SET_TRIS_B( 0b1110000000001000); 
+14BC:  MOV     #E008,W4
+14BE:  MOV     W4,2C8
+....................     
+....................      
+....................    output_float(BT_DW);   //Set  as Input Pin 
+14C0:  BSET.B  2C9.5
+....................    output_float(BT_UP);   //Set  as Input Pin 
+14C2:  BSET.B  2C9.6
+....................    output_float(BT_SET);   //Set  as Input Pin 
+14C4:  BSET.B  2C9.7
+....................     
+....................    output_low(EXP_OUT_DO); 
+14C6:  BCLR.B  2C9.4
+14C8:  BCLR.B  2CD.4
+....................    output_low(EXP_OUT_CLOCK); 
+14CA:  BCLR.B  2C9.3
+14CC:  BCLR.B  2CD.3
+....................    output_low(EXP_OUT_ENABLE); 
+14CE:  BCLR.B  2C9.2
+14D0:  BCLR.B  2CD.2
+....................     
+....................    //output_low(LED_Under); 
+....................    //output_low(LED_Over); 
+....................    //output_low(Over_Rly); 
+....................    //output_low(Under_Rly); 
+....................      
+....................    output_low(PIN_B3); 
+14D2:  BCLR.B  2C8.3
+14D4:  BCLR.B  2CC.3
+....................  
+....................    delay_ms(50); 
+14D6:  MOV     #32,W0
+14D8:  CALL    5BE
+....................     
+....................    Soft_adc_init(); 
+14DC:  CALL    672
+....................     
+....................    //output_low(LED_Under); 
+....................    //output_high(LED_Over);  
+....................     
+....................     
+.................... /* 
+....................    int16 write_data[10]; 
+....................    write_data[0]=0xAA; 
+....................    write_program_memory (0x2B00, write_data,4); 
+....................    int16 buffer[10]; 
+....................    READ_PROGRAM_MEMORY (0x2B00, buffer,1); 
+....................    putc(buffer[0]); 
+....................     
+....................    write_data[0]=0xBB; 
+....................    write_program_memory (0x2B06, write_data,4); 
+....................    READ_PROGRAM_MEMORY (0x2B06, buffer,1); 
+....................    putc(buffer[0]); 
+....................     
+....................    write_data[0]=0xCC; 
+....................    write_program_memory (0x2B0C, write_data,4); 
+....................    READ_PROGRAM_MEMORY (0x2B0C, buffer,1); 
+....................    putc(buffer[0]); 
+....................     
+.................... */   
+....................    //delay_ms(1000); 
+....................    //putc(0xAA); 
+....................    /* 
+....................    READ_PROGRAM_MEMORY(UnderSet_addr ,UnderValue,1);putc(UnderValue[0]);if(UnderValue[0] < 10 || UnderValue[0] > 254) UnderValue[0] = 200; 
+....................    READ_PROGRAM_MEMORY(OverSet_addr ,OverValue,1);if(OverValue[0] < 10 || OverValue[0] > 254) OverValue[0] = 250; 
+....................    READ_PROGRAM_MEMORY(UnderResSet_addr ,UnderResValue,1);if(UnderResValue[0] < 10 || UnderResValue[0] > 254) UnderResValue[0] = 210; 
+....................    READ_PROGRAM_MEMORY(OverResSet_addr ,OverResValue,1);if(OverResValue[0] < 50 || OverResValue[0] > 254) OverResValue[0] = 240; 
+....................     
+....................    READ_PROGRAM_MEMORY(UnderTimSet_addr ,UnderTimSetValue,1);if(UnderTimSetValue[0] <= 0 || UnderTimSetValue[0] > 60) UnderTimSetValue[0] = 5; 
+....................    READ_PROGRAM_MEMORY(OverTimSet_addr ,OverTimSetValue,1);if(OverTimSetValue[0] <= 0 || OverTimSetValue[0] > 60) OverTimSetValue[0] = 5; 
+....................    READ_PROGRAM_MEMORY(UnderResTimSet_addr ,UnderResTimSetValue,1);if(UnderResTimSetValue[0] <= 0 || UnderResTimSetValue[0] > 60) UnderResTimSetValue[0] = 5; 
+....................    READ_PROGRAM_MEMORY(OverResTimSet_addr ,OverResTimSetValue,1);if(OverResTimSetValue[0] <= 0 || OverResTimSetValue[0] > 60) OverResTimSetValue[0] = 5; 
+....................    */ 
+....................     
+....................     
+....................    UnderValue = read_ext_eeprom(UnderSet_addr);if(UnderValue < MIN_VOLT || UnderValue > NORMAL_VOLT-1) UnderValue = 15; 
+14E0:  CLR.B   86E
+14E2:  CALL    7A0
+14E6:  MOV.B   W0L,856
+14E8:  CLR.B   857
+14EA:  MOV     856,W4
+14EC:  CP      W4,#F
+14EE:  BRA     NC,14F6
+14F0:  MOV     856,W4
+14F2:  CP      W4,#17
+14F4:  BRA     LEU,14FA
+14F6:  MOV     #F,W4
+14F8:  MOV     W4,856
+....................    //OverValue = read_ext_eeprom(OverSet_addr);if(OverValue < MIN_VOLT || OverValue > MAX_VOLT) OverValue = 120; 
+....................    UnderResValue = read_ext_eeprom(UnderResSet_addr);if(UnderResValue < UnderValue + 1 || UnderResValue > NORMAL_VOLT) UnderResValue = UnderValue+5; 
+14FA:  MOV.B   #2,W0L
+14FC:  MOV.B   W0L,86E
+14FE:  CALL    7A0
+1502:  MOV.B   W0L,85A
+1504:  CLR.B   85B
+1506:  MOV     856,W4
+1508:  ADD     W4,#1,W4
+150A:  MOV     W4,W0
+150C:  MOV     85A,W4
+150E:  CP      W4,W0
+1510:  BRA     NC,1518
+1512:  MOV     85A,W4
+1514:  CP      W4,#18
+1516:  BRA     LEU,151E
+1518:  MOV     856,W4
+151A:  ADD     W4,#5,W4
+151C:  MOV     W4,85A
+....................    //OverResValue = read_ext_eeprom(OverResSet_addr);if(OverResValue < MIN_VOLT || OverResValue > MAX_VOLT) OverResValue = OverValue-5; 
+....................     
+....................    UnderTimSetValue = read_ext_eeprom(UnderTimSet_addr);if(UnderTimSetValue < 0 || UnderTimSetValue > 60) UnderTimSetValue = 5; 
+151E:  MOV.B   #4,W0L
+1520:  MOV.B   W0L,86E
+1522:  CALL    7A0
+1526:  MOV.B   W0L,852
+1528:  CLR.B   853
+152A:  MOV     852,W4
+152C:  CP      W4,#0
+152E:  BRA     LT,1538
+1530:  MOV     852,W4
+1532:  MOV     #3C,W3
+1534:  CP      W3,W4
+1536:  BRA     GE,153C
+1538:  MOV     #5,W4
+153A:  MOV     W4,852
+....................    //OverTimSetValue = read_ext_eeprom(OverTimSet_addr);if(OverTimSetValue < 0 || OverTimSetValue > 60) OverTimSetValue = 5; 
+....................    UnderResTimSetValue = read_ext_eeprom(UnderResTimSet_addr);if(UnderResTimSetValue < 0 || UnderResTimSetValue > 60) UnderResTimSetValue = 5; 
+153C:  MOV.B   #6,W0L
+153E:  MOV.B   W0L,86E
+1540:  CALL    7A0
+1544:  MOV.B   W0L,850
+1546:  CLR.B   851
+1548:  MOV     850,W4
+154A:  CP      W4,#0
+154C:  BRA     LT,1556
+154E:  MOV     850,W4
+1550:  MOV     #3C,W3
+1552:  CP      W3,W4
+1554:  BRA     GE,155A
+1556:  MOV     #5,W4
+1558:  MOV     W4,850
+....................    //OverResTimSetValue = read_ext_eeprom(OverResTimSet_addr);if(OverResTimSetValue < 0 || OverResTimSetValue > 60) OverResTimSetValue = 5; 
+....................     
+....................    delay_ms(500); 
+155A:  MOV     #1F4,W0
+155C:  CALL    5BE
+....................    int8 i; 
+....................    for(i=0;i<=10;i++) 
+1560:  CLR.B   86A
+1562:  MOV     86A,W4
+1564:  CP.B    W4L,#A
+1566:  BRA     GT,160E
+....................    { 
+....................       real_data = Soft_read_adc_mcp();  
+1568:  CALL    8AC
+156C:  MOV     W0,830
+....................       vout = (real_data * 2.048) / 32767.0; // see text 
+156E:  MOV     830,W5
+1570:  MOV     W5,W0
+1572:  CLR     W3
+1574:  BTSC    W0.F
+1576:  SETM    W3
+1578:  MOV     W3,W1
+157A:  MOV     W3,W2
+157C:  CALL    8EA
+1580:  MOV     W5,[W15++]
+1582:  MOV     #A9FC,W4
+1584:  MOV     #D2F1,W5
+1586:  MOV     #624D,W6
+1588:  MOV     #4000,W7
+158A:  CALL    94E
+158E:  MOV     [--W15],W5
+1590:  MOV     W0,W5
+1592:  MOV     W1,W6
+1594:  MOV     W2,W7
+1596:  MOV     W3,W8
+1598:  MOV     W5,[W15++]
+159A:  MOV     W6,[W15++]
+159C:  MOV     W7,[W15++]
+159E:  MOV     W5,W0
+15A0:  MOV     W6,W1
+15A2:  MOV     W7,W2
+15A4:  MOV     W8,W3
+15A6:  MOV     #0,W4
+15A8:  MOV     #0,W5
+15AA:  MOV     #FFC0,W6
+15AC:  MOV     #40DF,W7
+15AE:  CALL    A5C
+15B2:  MOV     [--W15],W7
+15B4:  MOV     [--W15],W6
+15B6:  MOV     [--W15],W5
+15B8:  CALL    B64
+15BC:  MOV     W1,832
+15BE:  MOV     W2,834
+....................       vin = vout / (R2/(R1+R2)); 
+15C0:  BCLR.B  43.0
+15C2:  MOV     83A,W0
+15C4:  MOV     83C,W1
+15C6:  MOV     83E,W2
+15C8:  MOV     840,W3
+15CA:  CALL    BA8
+15CE:  MOV     W0,W2
+15D0:  MOV     W1,W3
+15D2:  MOV     83E,W0
+15D4:  MOV     840,W1
+15D6:  CALL    D48
+15DA:  MOV     W0,W2
+15DC:  MOV     W1,W3
+15DE:  MOV     832,W0
+15E0:  MOV     834,W1
+15E2:  CALL    D48
+15E6:  MOV     W0,836
+15E8:  MOV     W1,838
+....................       DC_V =(int16)vin;   
+15EA:  MOV     836,W0
+15EC:  MOV     838,W1
+15EE:  CALL    E12
+15F2:  MOV     W0,808
+....................        
+....................       DC_Average[i] = DC_V; 
+15F4:  MOV.B   86A,W0L
+15F6:  SE      W0,W0
+15F8:  MOV     W0,W4
+15FA:  MUL.UU  W4,#2,W0
+15FC:  MOV     #80C,W4
+15FE:  ADD     W0,W4,W5
+1600:  MOV     808,W4
+1602:  MOV     W4,[W5+#0]
+....................        
+....................       delay_ms(20); 
+1604:  MOV     #14,W0
+1606:  CALL    5BE
+....................     
+....................    } 
+160A:  INC.B   086A
+160C:  BRA     1562
+....................    DC_V = DC_Average[0]; 
+160E:  PUSH    80C
+1610:  POP     808
+....................    DC_V = DC_V + DC_Average[1]; 
+1612:  MOV     808,W0
+1614:  ADD     80E,W0
+1616:  MOV     W0,808
+....................    DC_V = DC_V + DC_Average[2]; 
+1618:  MOV     808,W0
+161A:  ADD     810,W0
+161C:  MOV     W0,808
+....................    DC_V = DC_V + DC_Average[3]; 
+161E:  MOV     808,W0
+1620:  ADD     812,W0
+1622:  MOV     W0,808
+....................    DC_V = DC_V + DC_Average[4]; 
+1624:  MOV     808,W0
+1626:  ADD     814,W0
+1628:  MOV     W0,808
+....................    DC_V = DC_V + DC_Average[5]; 
+162A:  MOV     808,W0
+162C:  ADD     816,W0
+162E:  MOV     W0,808
+....................    DC_V = DC_V + DC_Average[6]; 
+1630:  MOV     808,W0
+1632:  ADD     818,W0
+1634:  MOV     W0,808
+....................    DC_V = DC_V + DC_Average[7]; 
+1636:  MOV     808,W0
+1638:  ADD     81A,W0
+163A:  MOV     W0,808
+....................    DC_V = DC_V + DC_Average[8]; 
+163C:  MOV     808,W0
+163E:  ADD     81C,W0
+1640:  MOV     W0,808
+....................    DC_V = DC_V + DC_Average[9]; 
+1642:  MOV     808,W0
+1644:  ADD     81E,W0
+1646:  MOV     W0,808
+....................    DC_V = DC_V/10; 
+1648:  MOV     808,W4
+164A:  MOV     #A,W3
+164C:  REPEAT  #11
+164E:  DIV.U   W4,W3
+1650:  MOV     W0,808
+....................     
+....................    if(DC_V <= UnderValue) 
+1652:  MOV     808,W0
+1654:  MOV     856,W4
+1656:  CP      W4,W0
+1658:  BRA     NC,1672
+....................    { 
+....................       output_low(Under_Rly);//on rly 
+165A:  BCLR.B  2C8.6
+165C:  BCLR.B  2CC.6
+....................       output_low(Over_Rly);//on rly 
+165E:  BCLR.B  2C8.7
+1660:  BCLR.B  2CC.7
+....................       State = State_Under; 
+1662:  MOV.B   #2,W0L
+1664:  MOV.B   W0L,845
+....................       FlashLEDUnder = false;   
+1666:  BCLR.B  802.0
+....................       output_high(LED_Under);//on led 
+1668:  BCLR.B  2C8.4
+166A:  BSET.B  2CC.4
+....................       output_low(LED_Over); 
+166C:  BCLR.B  2C8.0
+166E:  BCLR.B  2CC.0
+....................    } 
+....................    else 
+1670:  BRA     1688
+....................    { 
+....................       output_high(Under_Rly);//on rly 
+1672:  BCLR.B  2C8.6
+1674:  BSET.B  2CC.6
+....................       output_high(Over_Rly);//on rly 
+1676:  BCLR.B  2C8.7
+1678:  BSET.B  2CC.7
+....................       output_low(LED_Under);//off rly 
+167A:  BCLR.B  2C8.4
+167C:  BCLR.B  2CC.4
+....................       output_high(LED_Over);//off rly 
+167E:  BCLR.B  2C8.0
+1680:  BSET.B  2CC.0
+....................       UnderTimeCount = 0; 
+1682:  CLR     84A
+....................       State = State_nor; 
+1684:  CLR.B   845
+....................       FlashLEDUnder = false; //on led   
+1686:  BCLR.B  802.0
+....................    } 
+....................     
+....................     
+....................  
+.................... /* 
+....................    if((UnderValue<50)||(UnderValue>130)) 
+....................       UnderValue = 110; 
+....................    if((UnderResValue<50)||(UnderResValue>140)) 
+....................       UnderResValue = 115; 
+....................    if((UnderTimSetValue<0)||(UnderTimSetValue>60)) 
+....................       UnderTimSetValue = 5; 
+....................    if((UnderResTimSetValue<0)||(UnderResTimSetValue>60)) 
+....................       UnderResTimSetValue = 5; 
+....................        
+....................    if((OverValue<120)||(OverValue>180)) 
+....................       OverValue = 135; 
+....................    if((OverResValue<125)||(OverResValue>185)) 
+....................       OverResValue = 130; 
+....................    if((OverTimSetValue<0)||(OverTimSetValue>60)) 
+....................       OverTimSetValue = 5; 
+....................    if((OverResTimSetValue<0)||(OverResTimSetValue>60)) 
+....................       OverResTimSetValue = 5; 
+....................  
+....................    
+....................    real_data = Soft_read_adc_mcp();  
+....................    vout = (real_data * 2.048) / 32767.0; // see text 
+....................    vin = vout / (R2/(R1+R2)); 
+....................    DC_V =(int16)vin;   
+....................     
+....................     
+....................    DC_V7seg = (int16)vin; 
+....................     
+....................    int8 i; 
+....................    for(i=0;i<=10;i++) 
+....................    { 
+....................      DC_Average[i] = DC_V7seg; 
+....................    } 
+....................    
+....................    DC_V7seg = DC_Average[0]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[1]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[2]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[3]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[4]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[5]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[6]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[7]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[8]; 
+....................    DC_V7seg = DC_V7seg + DC_Average[9]; 
+....................    DC_V7seg = DC_V7seg/10; 
+....................     
+.................... */    
+....................    //  jj 05092018 
+....................    //output_low(LED_Under);// 
+....................    //output_high(LED_Over);//off rly 
+....................    //output_high(Under_Rly);//on rly 
+....................    //output_high(Over_Rly);//on rly 
+....................  /* 
+....................    if(DC_V <= UnderValue) 
+....................    { 
+....................       output_low(Under_Rly);//on rly 
+....................       output_low(Over_Rly);//on rly 
+....................       State = State_Under; 
+....................       FlashLEDUnder = false;   
+....................       output_high(LED_Under);//on led 
+....................       output_low(LED_Over); 
+....................       StopTimer(); 
+....................    } 
+....................    else 
+....................    { 
+....................       output_high(Under_Rly);//on rly 
+....................       output_high(Over_Rly);//on rly 
+....................       output_low(LED_Under);//off rly 
+....................       output_low(LED_Under);//off rly 
+....................       UnderTimeCount = 0; 
+....................       State = State_nor; 
+....................       FlashLEDUnder = false; //on led   
+....................       StopTimer(); 
+....................    } 
+....................  */ 
+....................     
+....................    setup_wdt(WDT_ON); 
+1688:  BSET.B  740.5
+....................    setup_timer1(TMR_INTERNAL|TMR_DIV_BY_8); 
+168A:  CLR     104
+168C:  SETM    102
+168E:  MOV     #A010,W4
+1690:  MOV     W4,104
+....................     
+....................    /* 
+....................    real_data = Soft_read_adc_mcp(); 
+....................     
+....................    vout = (real_data * 2.048) / 32767.0; // see text 
+....................    vin = vout / (R2/(R1+R2)); 
+....................    
+....................    DC_V =(int16)vin; 
+....................     
+....................     
+....................  
+....................    //vin = vin*10.0;  // for 24 48 V  
+....................    DC_V7seg = (int16)vin; 
+....................    
+....................    if(DC_V <= UnderValue) 
+....................    { 
+....................       output_low(Under_Rly);//on rly 
+....................       output_low(Over_Rly);//on rly 
+....................       State = State_Under; 
+....................       FlashLEDUnder = false;   
+....................       output_high(LED_Under);//on led 
+....................       output_low(LED_Over); 
+....................    } 
+....................    else 
+....................    { 
+....................       output_high(Under_Rly);//on rly 
+....................       output_high(Over_Rly);//on rly 
+....................       output_low(LED_Under); 
+....................       output_high(LED_Over);  
+....................       UnderTimeCount = 0; 
+....................       State = State_nor; 
+....................       FlashLEDUnder = false; //on led  
+....................        
+....................    } 
+....................    */ 
+.................... /*   
+....................    output_high(Under_Rly);//on rly 
+....................    output_high(Over_Rly);//on rly 
+....................    output_low(LED_Under); 
+....................    output_high(LED_Over);  
+....................    State = State_nor; 
+.................... */  
+....................     
+....................    unsigned int16 Count_Healty =7;//7 612 us  
+1692:  MOV     #7,W4
+1694:  MOV     W4,86C
+....................    while(1) 
+....................    {   
+....................       Count_Healty++; 
+1696:  INC     086C
+....................       output_toggle(PIN_A4); //5.6 uSec perloop 
+1698:  BCLR.B  2C0.4
+169A:  BTG.B   2C4.4
+....................       //delay_cycles( 1 ); // 190 nanosec @ 32 Mhz 
+....................       restart_wdt(); 
+169C:  CLRWDT  
+....................        
+....................        
+....................        
+....................       if(Count_Healty %1500 ==0 )// 30 mS. 
+169E:  MOV     86C,W4
+16A0:  MOV     #5DC,W3
+16A2:  REPEAT  #11
+16A4:  DIV.U   W4,W3
+16A6:  MOV     W1,W5
+16A8:  CP0     W5
+16AA:  BRA     NZ,16B0
+....................       {         
+....................          buttonRead(); 
+16AC:  CALL    E96
+....................       } 
+....................        
+....................       if(Count_Healty %1000 ==0 ) //20 mS. 
+16B0:  MOV     86C,W4
+16B2:  MOV     #3E8,W3
+16B4:  REPEAT  #11
+16B6:  DIV.U   W4,W3
+16B8:  MOV     W1,W5
+16BA:  CP0     W5
+16BC:  BRA     NZ,16C2
+....................       {         
+....................          Read_VDC();//Time for Read VDC is 62 ms.  
+16BE:  CALL    1186
+....................       } 
+....................        
+....................       //delay_ms(40); 
+....................           
+....................       //flash LED Healty 
+....................        
+....................       if(Count_Healty %32750 ==0 ) 
+16C2:  MOV     86C,W4
+16C4:  MOV     #7FEE,W3
+16C6:  REPEAT  #11
+16C8:  DIV.U   W4,W3
+16CA:  MOV     W1,W5
+16CC:  CP0     W5
+16CE:  BRA     NZ,16E2
+....................       {           
+....................          output_toggle(LED_Healty); 
+16D0:  BCLR.B  2C8.5
+16D2:  BTG.B   2CC.5
+....................          Count_Healty =1; 
+16D4:  MOV     #1,W4
+16D6:  MOV     W4,86C
+....................           
+....................          // Re-initial if MCP3425 Hang 
+....................          if(DC_V < 10 ) 
+16D8:  MOV     808,W4
+16DA:  CP      W4,#A
+16DC:  BRA     C,16E2
+....................          { 
+....................             Soft_adc_init(); 
+16DE:  CALL    672
+....................          } 
+....................       } 
+....................        
+....................        
+....................       //*********  Menu Count ***************_/ 
+....................       if(menuCount) 
+16E2:  CP0     824
+16E4:  BRA     NZ,16EA
+16E6:  CP0     826
+16E8:  BRA     Z,1700
+....................       {  
+....................          if(--menuCount ==0) 
+16EA:  DEC     0824
+16EC:  BTSS.B  42.0
+16EE:  DEC     0826
+16F0:  CP0     824
+16F2:  BRA     NZ,1700
+16F4:  CP0     826
+16F6:  BRA     NZ,1700
+....................          { 
+....................            menuCount =0; 
+16F8:  CLR     824
+16FA:  CLR     826
+....................            mode = Nor_UnOly;  
+16FC:  CLR.B   844
+....................            set_mode = false; 
+16FE:  BCLR.B  802.2
+....................          } 
+....................          
+....................       }     
+....................        
+....................       //delay_ms(40); 
+....................        
+....................    }  //end while 
+1700:  BRA     1696
+....................    
+.................... } 
+1702:  PWRSAV  #0
+
+Configuration Fuses:
+   Word  1L: 1FEF   NOJTAG PROTECT NOWRT NODEBUG ICSP1 WDT WINDIS WPRES32 WPOSTS16
+          H: 0000  
+   Word  2L: AAF7   IOL1WAY IESO PR NOCKSFSM NOOSCIO NOPR I2C1SELD
+          H: 0000  
