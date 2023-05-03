@@ -74,7 +74,6 @@ volatile unsigned int8 ReadI2CCount =0,I2C_wait;
 
 volatile int1 Ack1 =1,Ack2 =1,Ack3 =1;
 
-
 int16 real_data ;
 
 float vout = 0.0;

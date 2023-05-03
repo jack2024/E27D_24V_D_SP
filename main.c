@@ -387,7 +387,6 @@ void SegmentDisplay()
 {
   Signed int8 j=0,data_out,data_U2,data_U1;
   static int8 cnt=0 ;
-  
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
   static int V_to_Seg; 
   if(mode == nor)  
